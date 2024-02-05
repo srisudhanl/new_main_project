@@ -265,7 +265,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                         });
                         try {
                           final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
-                          final academicDetails = snapshot.docs[0] as Map<String, dynamic>;
+                          final academicDetails = snapshot.docs[0] as DocumentSnapshot;
                           sslcMark = academicDetails['sslc'];
                           hscMark = academicDetails['hsc'];
                           cid = academicDetails['cid'];
@@ -327,7 +327,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                               {FirebaseAuth.instance.signOut().then((result) =>
                               {
                                 Navigator.pop(context),
-                                _showDialog(context, "data inserted successfully"),
+
                               }).catchError(
                                       (err) => print(err)),}).catchError((err) =>
                                   print(err)));
@@ -336,6 +336,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                             print(e);
                           }
                         }
+                        _showDialog(context, "data inserted successfully");
                         Navigator.pop(context);
                       }:null,
                       child: const Text("register/submit",style: TextStyle(color: Colors.white),),

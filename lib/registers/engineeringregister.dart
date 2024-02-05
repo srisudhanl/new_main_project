@@ -264,7 +264,7 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                         try {
                           print(apaarNumber);
                           final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
-                          final academicDetails = snapshot.docs[0] as Map<String, dynamic>;
+                          final academicDetails = snapshot.docs[0] as DocumentSnapshot;
                           sslcMark = academicDetails['sslc'];
                           hscMark = academicDetails['hsc'];
                           cid = academicDetails['cid'];
@@ -334,7 +334,7 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                                                   .signOut()
                                                   .then((result) => {
                                                         Navigator.pop(context),
-                                                        _showDialog(context, "data inserted successfully"),
+
                                                       })
                                                   .catchError((err) => print(err)),
                                             })
@@ -344,6 +344,8 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                                   print(e);
                                 }
                               }
+                              _showDialog(context, "data inserted successfully");
+                              Navigator.pop(context);
                             }
                           : null,
                       child: const Text(

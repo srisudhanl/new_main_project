@@ -35,6 +35,7 @@ class _AdminState extends State<Admin> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
+          padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),

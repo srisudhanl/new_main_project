@@ -332,7 +332,6 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                                             .signOut()
                                             .then((result) => {
                                                   Navigator.pop(context),
-                                                  _showDialog(context, "data inserted successfully"),
                                                 })
                                             .catchError((err) => print(err)),
                                       })
@@ -342,6 +341,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                             print(e);
                           }
                         }
+                        _showDialog(context, "data inserted successfully");
                         Navigator.pop(context);
                       }:null,
                       child: const Text(
