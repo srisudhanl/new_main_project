@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArtsStudentRegister extends StatefulWidget {
   const ArtsStudentRegister({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
   late String cpassword, intern, implant, aoi;
   late String sslcMark, hslcMark, cgpa, cid;
   late String yop1, yop2, yop3;
+  bool isVerified = false;
 
   Future _showDialog(BuildContext context, String message) async {
     return showDialog(
@@ -75,9 +77,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-            image:
-                DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -168,9 +168,15 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
               ),
               TextField(
                 controller: txtaaphar,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Enter Aaphar no:',
                   hintText: 'Aaphar no.',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      launchUrlToBrowser("https://www.abc.gov.in/");
+                    },
+                    icon: Icon(Icons.report_outlined),
+                  ),
                 ),
                 //InputDecoration
                 autocorrect: false,
@@ -263,6 +269,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                         yop2 = academicDetails['yop2'];
                         yop3 = academicDetails['yop3'];
                         _showDialog(context, "Verified SuccessFully");
+                        isVerified = true;
                       } catch (e) {
                         _showDialog(context, "Check Aaphar number");
                         if (kDebugMode) {
@@ -275,7 +282,10 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                         textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                         shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                         shadowColor: Colors.blueGrey),
-                    child: const Text("Verify",style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      "Verify",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -283,50 +293,57 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                         textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                         shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                         shadowColor: Colors.blueGrey),
-                    child: const Text("register/submit",style: TextStyle(color: Colors.white),),
-                    onPressed: () async {
+                    child: const Text(
+                      "register/submit",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: isVerified?() async {
                       setState(() {
                         showSpinner = true;
                       });
                       try {
-                        FirebaseAuth.instance.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password).then((currentUser) =>
-                            FirebaseFirestore.instance.collection("ArtsStudent")
-                                .doc(currentUser.user?.uid).set({
-                              "uid": currentUser.user?.uid,
-                              "firstname": firstname,
-                              "lastname": lastname,
-                              "email": email,
-                              "address": address,
-                              "phno": phno,
-                              "yop1": yop1,
-                              "HSLC": hslcMark,
-                              "SSLC": sslcMark,
-                              "yop2": yop2,
-                              "CID": cid,
-                              "CGPA":cgpa,
-                              "yop3": yop3,
-                              "intern": intern,
-                              "implant": implant,
-                              "AOI":aoi,
-                              "password": password,
-                              "cpassword": cpassword,
-                            }).then((result) =>
-                            {FirebaseAuth.instance.signOut().then((result) =>
-                            {
-                              Navigator.pop(context),
-                              _showDialog(context, "database connected"),
-                            }).catchError(
-                                    (err) => print(err)),}).catchError((err) =>
-                                print(err)));
+                        FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(email: email, password: password)
+                            .then((currentUser) => FirebaseFirestore.instance
+                                .collection("ArtsStudent")
+                                .doc(currentUser.user?.uid)
+                                .set({
+                                  "uid": currentUser.user?.uid,
+                                  "firstname": firstname,
+                                  "lastname": lastname,
+                                  "email": email,
+                                  "address": address,
+                                  "phno": phno,
+                                  "yop1": yop1,
+                                  "HSLC": hslcMark,
+                                  "SSLC": sslcMark,
+                                  "yop2": yop2,
+                                  "CID": cid,
+                                  "CGPA": cgpa,
+                                  "yop3": yop3,
+                                  "intern": intern,
+                                  "implant": implant,
+                                  "AOI": aoi,
+                                  "password": password,
+                                  "cpassword": cpassword,
+                                })
+                                .then((result) => {
+                                      FirebaseAuth.instance
+                                          .signOut()
+                                          .then((result) => {
+                                                Navigator.pop(context),
+                                                _showDialog(context, "database connected"),
+                                              })
+                                          .catchError((err) => print(err)),
+                                    })
+                                .catchError((err) => print(err)));
                       } catch (e) {
                         if (kDebugMode) {
                           print(e);
                         }
                       }
                       Navigator.pop(context);
-                    },
+                    }:null,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -346,7 +363,10 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                       txtaoi.clear();
                       txtcpassword.clear();
                     },
-                    child: const Text("Clear",style: TextStyle(color: Colors.white),),
+                    child: const Text(
+                      "Clear",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -355,5 +375,17 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
         ),
       ),
     );
+  }
+  void launchUrlToBrowser(String url, {LaunchMode mode = LaunchMode.externalApplication}) async {
+    try {
+      Uri? uri = Uri.tryParse(url);
+      if (uri != null) {
+        launchUrl(uri);
+      } else {
+        print('URI cannot be null.');
+      }
+    } catch (e) {
+      print( 'Launch url error : $e');
+    }
   }
 }

@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   flutter_launcher_icons: ^0.13.1
   animated_text_kit: ^4.2.2
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +57,7 @@ dev_dependencies:
 
 flutter_icons:
   android: "launcher_icon"
-  image_path: "assets/splashscreen.jpeg"
+  image_path: "assets/splashscreen.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

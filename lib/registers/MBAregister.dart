@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MbaRegister extends StatefulWidget {
   const MbaRegister({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _MbaRegisterState extends State<MbaRegister> {
   late String cpassword, intern, implant, aoi;
   late String sslcMark, hslcMark, cgpa, cid;
   late String yop1, yop2, yop3;
+  bool isVerified = false;
 
   Future _showDialog(BuildContext context, String message) async {
     return showDialog(
@@ -168,9 +170,15 @@ class _MbaRegisterState extends State<MbaRegister> {
               ), //TextField
               TextField(
                 controller: txtaaphar,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Enter Aaphar no:',
                   hintText: 'Aaphar no.',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      launchUrlToBrowser("https://www.abc.gov.in/");
+                    },
+                    icon: Icon(Icons.report_outlined),
+                  ),
                 ),
                 //InputDecoration
                 autocorrect: false,
@@ -263,6 +271,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                         yop2 = academicDetails['yop2'];
                         yop3 = academicDetails['yop3'];
                         _showDialog(context, "Verified SuccessFully");
+                        isVerified = true;
                       } catch (e) {
                         _showDialog(context, "Check Aaphar number");
                         if (kDebugMode) {
@@ -284,7 +293,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                         shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                         shadowColor: Colors.blueGrey),
                     child: const Text("register/submit",style: TextStyle(color: Colors.white),),
-                    onPressed: () async {
+                    onPressed: isVerified?() async {
                       setState(() {
                         showSpinner = true;
                       });
@@ -326,7 +335,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                         }
                       }
                       Navigator.pop(context);
-                    },
+                    }:null,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -355,5 +364,18 @@ class _MbaRegisterState extends State<MbaRegister> {
         ),
       ),
     );
+  }
+
+  void launchUrlToBrowser(String url, {LaunchMode mode = LaunchMode.externalApplication}) async {
+    try {
+      Uri? uri = Uri.tryParse(url);
+      if (uri != null) {
+        launchUrl(uri);
+      } else {
+        print('URI cannot be null.');
+      }
+    } catch (e) {
+      print( 'Launch url error : $e');
+    }
   }
 }
