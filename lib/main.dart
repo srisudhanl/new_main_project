@@ -31,7 +31,7 @@ class Splash extends StatelessWidget {
         width: double.infinity,
         child: FlutterSplashScreen(
           splashScreenBody: Center(
-            child: Image.asset("assets/splashscreen.jpeg"),
+            child: Image.asset("assets/splashscreen.png"),
           ),
           nextScreen: const MyApp(),
           backgroundColor: Colors.white,

@@ -54,8 +54,7 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://previews.123rf.com/images/tanyastock/tanyastock1803/tanyastock180300490/97923644-user-icon-avatar-login-sign-circle-button-with-soft-color-gradient-background-vector-.jpg"),
+                              image: AssetImage("assets/engineering_login.jpeg"),
                               fit: BoxFit.cover)),
                     ),
                     const Text('Engineer Login',
@@ -161,7 +160,7 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
                                 ),
                                 onPressed: (){
                                   Navigator.push(
-                                      context,MaterialPageRoute(builder:(context)=>const engineeringregister()));
+                                      context,MaterialPageRoute(builder:(context)=>const EngineeringRegister()));
                                 },
                                 child: const Text(
                                     "Sign Up",style: TextStyle(color: Colors.white)

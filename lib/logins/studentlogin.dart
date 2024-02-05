@@ -46,20 +46,14 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
           child: SingleChildScrollView(
               child: Column(children: <Widget>[
             Container(
               width: double.infinity,
               height: 250,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://previews.123rf.com/images/tanyastock/tanyastock1803/tanyastock180300490/97923644-user-icon-avatar-login-sign-circle-button-with-soft-color-gradient-background-vector-.jpg"),
-                      fit: BoxFit.cover)),
+                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/engineering_login.jpeg"), fit: BoxFit.cover)),
             ),
 
             const Text(
@@ -138,7 +132,10 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                       showSpinner = false;
                     });
                   },
-                  child: const Text("Login",style: TextStyle(color: Colors.white),)),
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(color: Colors.white),
+                  )),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ArtsStudentLogin()));
@@ -148,7 +145,10 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                     textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                     shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                     shadowColor: Colors.blueGrey),
-                child: const Text("Cancel",style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.white),
+                ),
               )
             ]),
             SingleChildScrollView(
@@ -172,7 +172,10 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ArtsStudentRegister()));
                         },
-                        child: const Text("Sign Up",style: TextStyle(color: Colors.white),),
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],

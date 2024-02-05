@@ -41,8 +41,7 @@ class _AdminLoginState extends State<AdminLogin> {
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://image.shutterstock.com/image-vector/female-support-service-customer-care-260nw-1007915356.jpg"),
+                      image: AssetImage("assets/admin_login.jpeg"),
                       fit: BoxFit.cover)),
               width: double.infinity,
             ),

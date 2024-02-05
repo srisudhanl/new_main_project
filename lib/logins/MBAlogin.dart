@@ -55,8 +55,7 @@ class _MbaLoginState extends State<MbaLogin> {
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "https://media.istockphoto.com/vectors/placeholder-avatar-female-person-default-woman-avatar-image-gray-vector-id1273355367?k=20&m=1273355367&s=612x612&w=0&h=GFCtsN8bav6S-9jX1EPwRzHKEfmSDgtY5zSw494mG1o="),
+                      image:AssetImage("assets/mba_login.jpeg"),
                       fit: BoxFit.cover)),
               height: 300,
               width: double.infinity,

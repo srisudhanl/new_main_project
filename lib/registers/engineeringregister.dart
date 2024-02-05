@@ -4,18 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class engineeringregister extends StatefulWidget {
-  const engineeringregister({Key? key}) : super(key: key);
+class EngineeringRegister extends StatefulWidget {
+  const EngineeringRegister({Key? key}) : super(key: key);
 
   @override
-  State<engineeringregister> createState() => _engineeringregisterState();
+  State<EngineeringRegister> createState() => _EngineeringRegisterState();
 }
 
-class _engineeringregisterState extends State<engineeringregister> {
+class _EngineeringRegisterState extends State<EngineeringRegister> {
   late String firstname, lastname, email, address;
-  late String phno, aadhar, aaphar, password;
+  late String phno, aadhar, apaarNumber, password;
   late String cpassword, intern, implant, aoi;
-  late String sslcMark, hslcMark, cgpa, cid;
+  late String sslcMark, hscMark, cgpa, cid;
   late String yop1, yop2, yop3;
   bool isVerified = false;
 
@@ -40,7 +40,7 @@ class _engineeringregisterState extends State<engineeringregister> {
   final txtaddress = TextEditingController();
   final txtphno = TextEditingController();
   final txtaadhar = TextEditingController();
-  final txtaaphar = TextEditingController();
+  final txtapaar = TextEditingController();
   final txtintern = TextEditingController();
   final txtimplant = TextEditingController();
   final txtaoi = TextEditingController();
@@ -54,7 +54,7 @@ class _engineeringregisterState extends State<engineeringregister> {
     txtlastname.dispose();
     txtemail.dispose();
     txtaddress.dispose();
-    txtaaphar.dispose();
+    txtapaar.dispose();
     txtphno.dispose();
     txtpassword.dispose();
     txtcpassword.dispose();
@@ -77,6 +77,7 @@ class _engineeringregisterState extends State<engineeringregister> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
+        padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
         decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
         child: SingleChildScrollView(
           child: Column(
@@ -167,7 +168,7 @@ class _engineeringregisterState extends State<engineeringregister> {
                 keyboardType: TextInputType.number,
               ), //TextField
               TextField(
-                controller: txtaaphar,
+                controller: txtapaar,
                 decoration: InputDecoration(
                   labelText: 'Enter Aaphar no:',
                   hintText: 'Aaphar no.',
@@ -181,7 +182,7 @@ class _engineeringregisterState extends State<engineeringregister> {
                 //InputDecoration
                 autocorrect: false,
                 onChanged: (value) {
-                  aaphar = value;
+                  apaarNumber = value;
                 },
                 keyboardType: TextInputType.number,
               ),
@@ -250,127 +251,133 @@ class _engineeringregisterState extends State<engineeringregister> {
                 },
                 keyboardType: TextInputType.text,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      try {
-                        final snapshot = await FirebaseFirestore.instance.collection('depository').where('Aaphar', isEqualTo: aaphar).get();
-                        final academicDetails = snapshot.docs[0] as Map<String, dynamic>;
-                        sslcMark = academicDetails['sslcMark'];
-                        hslcMark = academicDetails['hslcMark'];
-                        cid = academicDetails['cid'];
-                        cgpa = academicDetails['cgpa'];
-                        yop1 = academicDetails['yop1'];
-                        yop2 = academicDetails['yop2'];
-                        yop3 = academicDetails['yop3'];
-                        _showDialog(context, "Verified SuccessFully");
-                        isVerified = true;
-                      } catch (e) {
-                        _showDialog(context, "Check Aaphar number");
-                        if (kDebugMode) {
-                          print(e);
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        try {
+                          print(apaarNumber);
+                          final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
+                          final academicDetails = snapshot.docs[0] as Map<String, dynamic>;
+                          sslcMark = academicDetails['sslc'];
+                          hscMark = academicDetails['hsc'];
+                          cid = academicDetails['cid'];
+                          cgpa = academicDetails['cgpa'];
+                          yop1 = academicDetails['yop1'];
+                          yop2 = academicDetails['yop2'];
+                          yop3 = academicDetails['yop3'];
+                          _showDialog(context, "Verified SuccessFully");
+                          isVerified = true;
+                        } catch (e) {
+                          _showDialog(context, "Check Apaar number");
+                          if (kDebugMode) {
+                            print(e);
+                          }
                         }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
-                        shadowColor: Colors.blueGrey),
-                    child: const Text(
-                      "Verify",
-                      style: TextStyle(color: Colors.white),
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
+                          shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                          shadowColor: Colors.blueGrey),
+                      child: const Text(
+                        "Verify",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
-                        shadowColor: Colors.blueGrey),
-                    child: const Text(
-                      "register/submit",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: isVerified
-                        ? () async {
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            try {
-                              Navigator.pop(context);
-                              FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(email: email, password: password)
-                                  .then((currentUser) => FirebaseFirestore.instance
-                                      .collection("engineer")
-                                      .doc(currentUser.user?.uid)
-                                      .set({
-                                        "uid": currentUser.user?.uid,
-                                        "firstname": firstname,
-                                        "lastname": lastname,
-                                        "email": email,
-                                        "address": address,
-                                        "phno": phno,
-                                        "yop1": yop1,
-                                        "HSLC": hslcMark,
-                                        "SSLC": sslcMark,
-                                        "yop2": yop2,
-                                        "CID": cid,
-                                        "CGPA": cgpa,
-                                        "yop3": yop3,
-                                        "intern": intern,
-                                        "implant": implant,
-                                        "AOI": aoi,
-                                        "password": password,
-                                        "cpassword": cpassword,
-                                      })
-                                      .then((result) => {
-                                            FirebaseAuth.instance
-                                                .signOut()
-                                                .then((result) => {
-                                                      Navigator.pop(context),
-                                                      _showDialog(context, "database connected"),
-                                                    })
-                                                .catchError((err) => print(err)),
-                                          })
-                                      .catchError((err) => print(err)));
-                            } catch (e) {
-                              if (kDebugMode) {
-                                print(e);
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
+                          shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                          shadowColor: Colors.blueGrey),
+                      onPressed: isVerified
+                          ? () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                Navigator.pop(context);
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(email: email, password: password)
+                                    .then((currentUser) => FirebaseFirestore.instance
+                                        .collection("engineer")
+                                        .doc(currentUser.user?.uid)
+                                        .set({
+                                          "uid": currentUser.user?.uid,
+                                          "firstname": firstname,
+                                          "lastname": lastname,
+                                          "email": email,
+                                          "address": address,
+                                          "phno": phno,
+                                          "yop1": yop1,
+                                          "HSC": hscMark,
+                                          "SSLC": sslcMark,
+                                          "yop2": yop2,
+                                          "CID": cid,
+                                          "CGPA": cgpa,
+                                          "yop3": yop3,
+                                          "intern": intern,
+                                          "implant": implant,
+                                          "AOI": aoi,
+                                          "password": password,
+                                          "cpassword": cpassword,
+                                        })
+                                        .then((result) => {
+                                              FirebaseAuth.instance
+                                                  .signOut()
+                                                  .then((result) => {
+                                                        Navigator.pop(context),
+                                                        _showDialog(context, "data inserted successfully"),
+                                                      })
+                                                  .catchError((err) => print(err)),
+                                            })
+                                        .catchError((err) => print(err)));
+                              } catch (e) {
+                                if (kDebugMode) {
+                                  print(e);
+                                }
                               }
                             }
-                          }
-                        : null,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
-                        shadowColor: Colors.blueGrey),
-                    onPressed: () {
-                      txtfirstname.clear();
-                      txtlastname.clear();
-                      txtemail.clear();
-                      txtaddress.clear();
-                      txtphno.clear();
-                      txtintern.clear();
-                      txtimplant.clear();
-                      txtpassword.clear();
-                      txtaoi.clear();
-                      txtcpassword.clear();
-                    },
-                    child: const Text(
-                      "Clear",
-                      style: TextStyle(color: Colors.white),
+                          : null,
+                      child: const Text(
+                        "register/submit",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
-                ],
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
+                          shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                          shadowColor: Colors.blueGrey),
+                      onPressed: () {
+                        txtfirstname.clear();
+                        txtlastname.clear();
+                        txtemail.clear();
+                        txtaddress.clear();
+                        txtaadhar.clear();
+                        txtapaar.clear();
+                        txtphno.clear();
+                        txtintern.clear();
+                        txtimplant.clear();
+                        txtpassword.clear();
+                        txtaoi.clear();
+                        txtcpassword.clear();
+                      },
+                      child: const Text(
+                        "Clear",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
