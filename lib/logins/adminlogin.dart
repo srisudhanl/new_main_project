@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
@@ -104,7 +105,8 @@ class _AdminLoginState extends State<AdminLogin> {
                     showSpinner = true;
                   });
                   try {
-                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
+                    FirebaseFirestore.instance.collection("admin"));
                     if (user != null) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const Admin()));
                     }

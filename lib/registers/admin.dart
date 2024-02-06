@@ -25,7 +25,7 @@ class _AdminState extends State<Admin> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'OVPC-ADMIN',
+            'OPSV-ADMIN',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,

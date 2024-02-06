@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,8 @@ class _UserLoginState extends State<UserLogin> {
                     showSpinner = true;
                   });
                   try {
-                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
+                        FirebaseFirestore.instance.collection("Firms"));
                     if (user != null) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const userdivision()));
                     }
