@@ -1,112 +1,96 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../querypage.dart';
 
-class student extends StatefulWidget {
-  const student({Key? key}) : super(key: key);
+class Student extends StatefulWidget {
+  const Student({Key? key}) : super(key: key);
 
   @override
-  State<student> createState() => _studentState();
+  State<Student> createState() => _StudentState();
 }
 
-class _studentState extends State<student> {
-  late String myfirstname;
-  late String mylastname;
-  late String myaddress;
-  late String myphno;
-  late String mySSLC;
-  late String myyop1;
-  late String myHSLC;
-  late String myyop2;
-  late String mydept;
-  late String myCID;
-  late String myyop3;
-  late String myintern;
-  late String myinplant;
-  late String myAOI;
-  late String mypassword;
-  late String mycpassword;
-  late String myEmail;
+class _StudentState extends State<Student> {
+  late String myfirstname, mylastname, myaddress, myphno;
+  late String mySSLC, myyop1, myHSC, myyop2;
+  late String myCID, myCGPA, myyop3, myintern;
+  late String myinplant, myAOI, mypassword, myEmail;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title: Text('OVPC-student',
+      appBar: AppBar(
+        title: const Text(
+          'OPSV-student',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color : Colors.white,
             fontSize: 15.0,
-          ),),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.query_builder),
-            onPressed: (){
-              Navigator.push(
-                  context,MaterialPageRoute(builder:(context)=>QueryPage()));
+            icon: const Icon(Icons.query_builder),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const QueryPage()));
             },
           ),
-        ],//TextStyle
+        ], //TextStyle
       ),
       body: Center(
         child: FutureBuilder(
           future: _fetch(),
-          builder: (context,snapshot){
-            if(snapshot.connectionState!=ConnectionState.done){
-              return Text("Loading data ... Please Wait");
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Text("Loading data ... Please Wait");
             }
             return SingleChildScrollView(
-              child:Column(
-                children: <Widget> [
+              child: Column(
+                children: <Widget>[
                   ListTile(
-                    title: Text("firstName       :myfirstname"),
+                    title: Text("FirstName       :$myfirstname"),
                   ),
                   ListTile(
-                    title: Text("lastName        :mylastname"),
+                    title: Text("LastName        :$mylastname"),
                   ),
                   ListTile(
-                    title: Text("email           :myEmail"),
+                    title: Text("Email           :$myEmail"),
                   ),
                   ListTile(
-                    title: Text("ph.no           :myphno"),
+                    title: Text("Ph.No           :$myphno"),
                   ),
                   ListTile(
-                    title: Text("Address         :myaddress"),
+                    title: Text("Address         :$myaddress"),
                   ),
                   ListTile(
-                    title: Text("SSLC I.D        :mySSLC"),
+                    title: Text("SSLC I.D        :$mySSLC"),
                   ),
                   ListTile(
-                    title: Text("Year of Passing :myyop1"),
+                    title: Text("Year of Passing :$myyop1"),
                   ),
                   ListTile(
-                    title: Text("HSLC I.D        :myHSLC"),
+                    title: Text("HSLC I.D        :$myHSC"),
                   ),
                   ListTile(
-                    title: Text("Year of Passing :myyop2"),
+                    title: Text("Year of Passing :$myyop2"),
                   ),
                   ListTile(
-                    title: Text("Department      :mydept"),
+                    title: Text("College I.D     :$myCID"),
                   ),
                   ListTile(
-                    title: Text("College I.D     :myCID"),
+                    title: Text("Year of Passing :$myyop3"),
                   ),
                   ListTile(
-                    title: Text("Year of Passing :myyop3"),
+                    title: Text("Internships     :$myintern"),
                   ),
                   ListTile(
-                    title: Text("Internships     :myintern"),
+                    title: Text("ImplantTraining :$myinplant"),
                   ),
                   ListTile(
-                    title: Text("InplantTraining :myinplant"),
+                    title: Text("Area of Interest :$myAOI"),
                   ),
                   ListTile(
-                    title: Text("Area of Interest :myAOI"),
-                  ),
-                  ListTile(
-                    title: Text("PassWord         :mypassword"),
-                  ),
-                  ListTile(
-                    title: Text("Confirm Password :mycpassword"),
+                    title: Text("PassWord         :$mypassword"),
                   ),
                 ],
               ),
@@ -115,33 +99,31 @@ class _studentState extends State<student> {
         ),
       ),
     );
-
   }
-  _fetch() async{
-    // final firebaseuser = await FirebaseAuth.instance.currentUser;
-    // if(firebaseuser!=null){
-    //   await Firestore.instance.collection('MBA').document(firebaseuser.uid).get()
-    //       .then((ds){
-    //     myfirstname=ds.data()['firstname'];
-    //     mylastname=ds.data()['lastname'];
-    //     myaddress=ds.data()['address'];
-    //     myEmail=ds.data()['email'];
-    //     myphno=ds.data()['phno'];
-    //     mySSLC=ds.data()['SSLC'];
-    //     myyop1=ds.data()['yop1'];
-    //     myHSLC=ds.data()['HSLC'];
-    //     myyop2=ds.data()['yop2'];
-    //     mydept=ds.data()['dept'];
-    //     myCID=ds.data()['CID'];
-    //     myyop3=ds.data()['yop3'];
-    //     myintern=ds.data()['intern'];
-    //     myinplant=ds.data()['inplant'];
-    //     myAOI=ds.data()['AOI'];
-    //     mypassword=ds.data()['password'];
-    //     mycpassword=ds.data()['cpassword'];
-    //   }).catchError((e){
-    //     print(e);
-    //   });
-    // }
+
+  _fetch() async {
+    final firebaseuser = await FirebaseAuth.instance.currentUser;
+    if (firebaseuser != null) {
+      await FirebaseFirestore.instance.collection('ArtsStudent').doc(firebaseuser.uid).get().then((ds) {
+        myfirstname = ds.data()?['firstname'];
+        mylastname = ds.data()?['lastname'];
+        myaddress = ds.data()?['address'];
+        myEmail = ds.data()?['email'];
+        myphno = ds.data()?['phno'];
+        mySSLC = ds.data()?['SSLC'];
+        myyop1 = ds.data()?['yop1'];
+        myHSC = ds.data()?['HSC'];
+        myyop2 = ds.data()?['yop2'];
+        myCID = ds.data()?['CID'];
+        myCGPA = ds.data()?['CGPA'];
+        myyop3 = ds.data()?['yop3'];
+        myintern = ds.data()?['intern'];
+        myinplant = ds.data()?['implant'];
+        myAOI = ds.data()?['AOI'];
+        mypassword = ds.data()?['password'];
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }

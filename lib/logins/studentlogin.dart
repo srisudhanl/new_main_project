@@ -123,7 +123,7 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                       final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
                           FirebaseFirestore.instance.collection("ArtsStudent"));
                       if (user != null) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const student()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Student()));
                       }
                     } catch (e) {
                       if (kDebugMode) {
