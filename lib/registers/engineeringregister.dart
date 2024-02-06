@@ -305,7 +305,7 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                               });
                               try {
                                 Navigator.pop(context);
-                                FirebaseAuth.instance
+                                await FirebaseAuth.instance
                                     .createUserWithEmailAndPassword(email: email, password: password)
                                     .then((currentUser) => FirebaseFirestore.instance
                                         .collection("engineer")

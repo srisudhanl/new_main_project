@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class QueryPage extends StatefulWidget {
@@ -48,9 +49,7 @@ class _QueryPageState extends State<QueryPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-            image:
-                DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
         child: Column(
           children: <Widget>[
             const Padding(
@@ -90,7 +89,8 @@ class _QueryPageState extends State<QueryPage> {
                 Column(
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await FirebaseFirestore.instance.collection("Queries").add({'query': query,'timeStamp':DateTime.now()});
                         Navigator.pop(context);
                         _showDialog(context, "Your Query is being processed.");
                       },
@@ -103,7 +103,10 @@ class _QueryPageState extends State<QueryPage> {
                             ),
                           ),
                           shadowColor: Colors.blueGrey),
-                      child: const Text("Register/submit",style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        "Register/submit",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -120,7 +123,10 @@ class _QueryPageState extends State<QueryPage> {
                         ),
                       ),
                       shadowColor: Colors.blueGrey),
-                  child: const Text("Clear",style: TextStyle(color: Colors.white),),
+                  child: const Text(
+                    "Clear",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),

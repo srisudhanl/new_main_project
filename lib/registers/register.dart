@@ -302,7 +302,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                           showSpinner = true;
                         });
                         try {
-                          FirebaseAuth.instance
+                          await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(email: email, password: password)
                               .then((currentUser) => FirebaseFirestore.instance
                                   .collection("ArtsStudent")

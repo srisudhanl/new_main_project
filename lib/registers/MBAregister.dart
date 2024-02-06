@@ -301,7 +301,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                           showSpinner = true;
                         });
                         try {
-                          FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
                               email: email,
                               password: password).then((currentUser) =>
                               FirebaseFirestore.instance.collection("MbaStudent")
