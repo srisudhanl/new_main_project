@@ -274,6 +274,7 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                           yop3 = academicDetails['yop3'];
                           _showDialog(context, "Verified SuccessFully");
                           isVerified = true;
+                          refresh();
                         } catch (e) {
                           _showDialog(context, "Check Apaar number");
                           if (kDebugMode) {
@@ -399,5 +400,8 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
     } catch (e) {
       print('Launch url error : $e');
     }
+  }
+  void refresh() {
+    if (mounted) setState(() {});
   }
 }

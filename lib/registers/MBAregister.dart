@@ -275,6 +275,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                           yop3 = academicDetails['yop3'];
                           _showDialog(context, "Verified SuccessFully");
                           isVerified = true;
+                          refresh();
                         } catch (e) {
                           _showDialog(context, "Check Apaar number");
                           if (kDebugMode) {
@@ -384,5 +385,8 @@ class _MbaRegisterState extends State<MbaRegister> {
     } catch (e) {
       print( 'Launch url error : $e');
     }
+  }
+  void refresh() {
+    if (mounted) setState(() {});
   }
 }
