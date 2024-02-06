@@ -304,7 +304,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                           FirebaseAuth.instance.createUserWithEmailAndPassword(
                               email: email,
                               password: password).then((currentUser) =>
-                              FirebaseFirestore.instance.collection("ArtsStudent")
+                              FirebaseFirestore.instance.collection("MbaStudent")
                                   .doc(currentUser.user?.uid).set({
                                 "uid": currentUser.user?.uid,
                                 "firstname": firstname,
@@ -337,8 +337,8 @@ class _MbaRegisterState extends State<MbaRegister> {
                             print(e);
                           }
                         }
-                        _showDialog(context, "data inserted successfully");
                         Navigator.pop(context);
+                        _showDialog(context, "data inserted successfully");
                       }:null,
                       child: const Text("register/submit",style: TextStyle(color: Colors.white),),
                     ),

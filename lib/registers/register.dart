@@ -341,8 +341,8 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                             print(e);
                           }
                         }
-                        _showDialog(context, "data inserted successfully");
                         Navigator.pop(context);
+                        _showDialog(context, "data inserted successfully");
                       }:null,
                       child: const Text(
                         "register/submit",

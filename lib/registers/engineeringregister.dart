@@ -345,8 +345,8 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                                   print(e);
                                 }
                               }
-                              _showDialog(context, "data inserted successfully");
                               Navigator.pop(context);
+                              _showDialog(context, "data inserted successfully");
                             }
                           : null,
                       child: const Text(
