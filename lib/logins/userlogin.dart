@@ -121,7 +121,7 @@ class _UserLoginState extends State<UserLogin> {
                     final user = userCredential.user;
                     final userSnapShot = await FirebaseFirestore.instance.collection('Firms').where("uid",isEqualTo: user?.uid).get();
                     if (userSnapShot.docs.isNotEmpty) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const userdivision()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
                     }else{
                       ToastManager.showToastShort(msg: "You're not authorized!!!");
                     }

@@ -3,22 +3,21 @@ import 'firms/MBAfirm.dart';
 import 'firms/engineerfirm.dart';
 import 'firms/firm.dart';
 
-class userdivision extends StatefulWidget {
-  const userdivision({Key? key}) : super(key: key);
+class UserDivision extends StatefulWidget {
+  const UserDivision({Key? key}) : super(key: key);
 
   @override
-  State<userdivision> createState() => _userdivisionState();
+  State<UserDivision> createState() => _UserDivisionState();
 }
 
-class _userdivisionState extends State<userdivision> {
+class _UserDivisionState extends State<UserDivision> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title: Text('OPSV-Division',
+        title: const Text('OPSV-Division',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color : Colors.white,
             fontSize: 15.0,
           ),
         ),
@@ -26,10 +25,9 @@ class _userdivisionState extends State<userdivision> {
       body: Container(
         width: double.infinity,
         height:double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage(
-                    "https://img.wallpapersafari.com/desktop/1366/768/2/3/QLI4V2.png"),
+                image: AssetImage("assets/background.jpeg"),
                 fit: BoxFit.cover)),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,26 +35,27 @@ class _userdivisionState extends State<userdivision> {
           children: <Widget>[Column(
             children: <Widget>[
               Container(
+                width:double.infinity,
+                height: 100,
+                padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
-                    child: Text("Arts student",style:TextStyle(
-                      fontSize:30.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                      textAlign: TextAlign.center,),
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                        shape: BeveledRectangleBorder(
+                        backgroundColor: Colors.green,
+                        shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(2)))
                         ,
                         shadowColor: Colors.blueGrey),
                     onPressed:() {
                       Navigator.push(
-                          context,MaterialPageRoute(builder:(context)=>firm()));
-                    }
+                          context,MaterialPageRoute(builder:(context)=>const firm()));
+                    },
+                    child: const Text("Arts student",style:TextStyle(
+                      fontSize:30.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                      textAlign: TextAlign.center,)
                 ),
-                width:double.infinity,
-                height: 100,
-                padding: EdgeInsets.all(10),
               ),
             ],
           ),
@@ -64,50 +63,52 @@ class _userdivisionState extends State<userdivision> {
               children: <Widget>[
 
                 Container(
+                  width:double.infinity,
+                  height: 100,
+                  padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                      child: Text("Engineering Student",style:TextStyle(
-                        fontSize:30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                        textAlign: TextAlign.center,),
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          shape: BeveledRectangleBorder(
+                          backgroundColor: Colors.green,
+                          shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
                       onPressed:() {
                         Navigator.push(
-                            context,MaterialPageRoute(builder:(context)=>engineerfirm()));
-                      }
+                            context,MaterialPageRoute(builder:(context)=>const engineerfirm()));
+                      },
+                      child: const Text("Engineering Student",style:TextStyle(
+                        fontSize:30.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                        textAlign: TextAlign.center,)
                   ),
-                  width:double.infinity,
-                  height: 100,
-                  padding: EdgeInsets.all(10),
                 ),
               ],
             ),
             Column(
               children: <Widget>[
                 Container(
+                  width:double.infinity,
+                  height: 100,
+                  padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
-                      child: Text("MBA Student",style:TextStyle(
-                        fontSize:30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                        textAlign: TextAlign.center,),
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          shape: BeveledRectangleBorder(
+                          backgroundColor: Colors.green,
+                          shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
                       onPressed:() {
                         Navigator.push(
-                            context,MaterialPageRoute(builder:(context)=>MBAfirm()));
-                      }
+                            context,MaterialPageRoute(builder:(context)=>const MBAfirm()));
+                      },
+                      child: const Text("MBA Student",style:TextStyle(
+                        fontSize:30.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                        textAlign: TextAlign.center,)
                   ),
-                  width:double.infinity,
-                  height: 100,
-                  padding: EdgeInsets.all(10),
                 ),
               ],
             ),
