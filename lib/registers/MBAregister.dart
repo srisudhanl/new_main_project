@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../toast_manager.dart';
+
 class MbaRegister extends StatefulWidget {
   const MbaRegister({Key? key}) : super(key: key);
 
@@ -338,7 +340,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                           }
                         }
                         Navigator.pop(context);
-                        _showDialog(context, "data inserted successfully");
+                        ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
                       }:null,
                       child: const Text("register/submit",style: TextStyle(color: Colors.white),),
                     ),

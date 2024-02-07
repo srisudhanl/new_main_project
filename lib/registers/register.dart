@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../toast_manager.dart';
+
 class ArtsStudentRegister extends StatefulWidget {
   const ArtsStudentRegister({Key? key}) : super(key: key);
 
@@ -342,7 +344,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                           }
                         }
                         Navigator.pop(context);
-                        _showDialog(context, "data inserted successfully");
+                        ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
                       }:null,
                       child: const Text(
                         "register/submit",
