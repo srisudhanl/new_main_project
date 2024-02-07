@@ -25,7 +25,6 @@ class _engineerState extends State<engineer> {
           'OPSV-Engineer',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
             fontSize: 15.0,
           ),
         ),
@@ -46,57 +45,63 @@ class _engineerState extends State<engineer> {
               return Text("Loading data ... Please Wait");
             }
             return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text("firstName       :$myfirstname"),
-                  ),
-                  ListTile(
-                    title: Text("lastName        :$mylastname"),
-                  ),
-                  ListTile(
-                    title: Text("email           :$myEmail"),
-                  ),
-                  ListTile(
-                    title: Text("ph.no           :$myphno"),
-                  ),
-                  ListTile(
-                    title: Text("Address         :$myaddress"),
-                  ),
-                  ListTile(
-                    title: Text("SSLC I.D        :$mySSLC"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop1"),
-                  ),
-                  ListTile(
-                    title: Text("HSLC I.D        :$myHSC"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop2"),
-                  ),
-                  ListTile(
-                    title: Text("College I.D     :$myCID"),
-                  ),
-                  ListTile(
-                    title: Text("CGPA      :$myCGPA"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop3"),
-                  ),
-                  ListTile(
-                    title: Text("Internships     :$myintern"),
-                  ),
-                  ListTile(
-                    title: Text("InplantTraining :$myinplant"),
-                  ),
-                  ListTile(
-                    title: Text("Area of Interest :$myAOI"),
-                  ),
-                  ListTile(
-                    title: Text("PassWord         :$mypassword"),
-                  ),
-                ],
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/background.jpeg"),
+                        fit: BoxFit.cover)),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("firstName       :$myfirstname"),
+                    ),
+                    ListTile(
+                      title: Text("lastName        :$mylastname"),
+                    ),
+                    ListTile(
+                      title: Text("email           :$myEmail"),
+                    ),
+                    ListTile(
+                      title: Text("ph.no           :$myphno"),
+                    ),
+                    ListTile(
+                      title: Text("Address         :$myaddress"),
+                    ),
+                    ListTile(
+                      title: Text("SSLC I.D        :$mySSLC"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop1"),
+                    ),
+                    ListTile(
+                      title: Text("HSLC I.D        :$myHSC"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop2"),
+                    ),
+                    ListTile(
+                      title: Text("College I.D     :$myCID"),
+                    ),
+                    ListTile(
+                      title: Text("CGPA      :$myCGPA"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop3"),
+                    ),
+                    ListTile(
+                      title: Text("Internships     :$myintern"),
+                    ),
+                    ListTile(
+                      title: Text("InplantTraining :$myinplant"),
+                    ),
+                    ListTile(
+                      title: Text("Area of Interest :$myAOI"),
+                    ),
+                    ListTile(
+                      title: Text("PassWord         :$mypassword"),
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -122,7 +127,7 @@ class _engineerState extends State<engineer> {
         myCGPA = ds.data()?['CGPA'];
         myyop3 = ds.data()?['yop3'];
         myintern = ds.data()?['intern'];
-        myinplant = ds.data()?['inplant'];
+        myinplant = ds.data()?['implant'];
         myAOI = ds.data()?['AOI'];
         mypassword = ds.data()?['password'];
       }).catchError((e) {

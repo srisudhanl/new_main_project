@@ -45,54 +45,60 @@ class _StudentState extends State<Student> {
               return const Text("Loading data ... Please Wait");
             }
             return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text("FirstName       :$myfirstname"),
-                  ),
-                  ListTile(
-                    title: Text("LastName        :$mylastname"),
-                  ),
-                  ListTile(
-                    title: Text("Email           :$myEmail"),
-                  ),
-                  ListTile(
-                    title: Text("Ph.No           :$myphno"),
-                  ),
-                  ListTile(
-                    title: Text("Address         :$myaddress"),
-                  ),
-                  ListTile(
-                    title: Text("SSLC I.D        :$mySSLC"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop1"),
-                  ),
-                  ListTile(
-                    title: Text("HSLC I.D        :$myHSC"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop2"),
-                  ),
-                  ListTile(
-                    title: Text("College I.D     :$myCID"),
-                  ),
-                  ListTile(
-                    title: Text("Year of Passing :$myyop3"),
-                  ),
-                  ListTile(
-                    title: Text("Internships     :$myintern"),
-                  ),
-                  ListTile(
-                    title: Text("ImplantTraining :$myinplant"),
-                  ),
-                  ListTile(
-                    title: Text("Area of Interest :$myAOI"),
-                  ),
-                  ListTile(
-                    title: Text("PassWord         :$mypassword"),
-                  ),
-                ],
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/background.jpeg"),
+                        fit: BoxFit.cover)),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("FirstName       :$myfirstname"),
+                    ),
+                    ListTile(
+                      title: Text("LastName        :$mylastname"),
+                    ),
+                    ListTile(
+                      title: Text("Email           :$myEmail"),
+                    ),
+                    ListTile(
+                      title: Text("Ph.No           :$myphno"),
+                    ),
+                    ListTile(
+                      title: Text("Address         :$myaddress"),
+                    ),
+                    ListTile(
+                      title: Text("SSLC I.D        :$mySSLC"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop1"),
+                    ),
+                    ListTile(
+                      title: Text("HSLC I.D        :$myHSC"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop2"),
+                    ),
+                    ListTile(
+                      title: Text("College I.D     :$myCID"),
+                    ),
+                    ListTile(
+                      title: Text("Year of Passing :$myyop3"),
+                    ),
+                    ListTile(
+                      title: Text("Internships     :$myintern"),
+                    ),
+                    ListTile(
+                      title: Text("ImplantTraining :$myinplant"),
+                    ),
+                    ListTile(
+                      title: Text("Area of Interest :$myAOI"),
+                    ),
+                    ListTile(
+                      title: Text("PassWord         :$mypassword"),
+                    ),
+                  ],
+                ),
               ),
             );
           },
