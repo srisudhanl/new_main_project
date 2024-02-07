@@ -5,6 +5,8 @@ import '../main.dart';
 import '../registers/admin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../toast_manager.dart';
+
 class AdminLogin extends StatefulWidget {
   const AdminLogin({Key? key}) : super(key: key);
 
@@ -16,6 +18,21 @@ class _AdminLoginState extends State<AdminLogin> {
   late String email;
   late String password;
   bool showSpinner = false;
+
+  Future _showDialog(BuildContext context, String message) async {
+    return showDialog(
+        builder: (context) => AlertDialog(
+          title: Text(message),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("ok"))
+          ],
+        ),
+        context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +122,16 @@ class _AdminLoginState extends State<AdminLogin> {
                     showSpinner = true;
                   });
                   try {
-                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
-                    FirebaseFirestore.instance.collection("admin"));
-                    if (user != null) {
+                    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                    final user = userCredential.user;
+                    final userSnapShot = await FirebaseFirestore.instance.collection('admin').where("uid",isEqualTo: user?.uid).get();
+                    if (userSnapShot.docs.isNotEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const Admin()));
+                    }else{
+                      ToastManager.showToastShort(msg: "You're not authorized!!!");
                     }
                   } catch (e) {
+                    ToastManager.showToastShort(msg: "You're not authorized!!!");
                     if (kDebugMode) {
                       print(e);
                     }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../pages/MBA.dart';
 import '../querypage.dart';
 import '../registers/MBAregister.dart';
+import '../toast_manager.dart';
 
 class MbaLogin extends StatefulWidget {
   const MbaLogin({Key? key}) : super(key: key);
@@ -120,12 +121,16 @@ class _MbaLoginState extends State<MbaLogin> {
                       showSpinner = true;
                     });
                     try {
-                      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
-                          FirebaseFirestore.instance.collection("MbaStudent"));
-                      if (user != null) {
+                      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                      final user = userCredential.user;
+                      final userSnapShot = await FirebaseFirestore.instance.collection('MbaStudent').where("uid",isEqualTo: user?.uid).get();
+                      if (userSnapShot.docs.isNotEmpty) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const MBA()));
+                      }else{
+                        ToastManager.showToastShort(msg: "You're not authorized!!!");
                       }
                     } catch (e) {
+                      ToastManager.showToastShort(msg: "You're not authorized!!!");
                       if (kDebugMode) {
                         print(e);
                       }

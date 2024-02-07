@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../querypage.dart';
 import '../registers/firmcollect.dart';
+import '../toast_manager.dart';
 import '../userdivision.dart';
 
 class UserLogin extends StatefulWidget {
@@ -18,6 +20,21 @@ class _UserLoginState extends State<UserLogin> {
   late String email;
   late String password;
   bool showSpinner = false;
+
+  Future _showDialog(BuildContext context, String message) async {
+    return showDialog(
+        builder: (context) => AlertDialog(
+          title: Text(message),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("ok"))
+          ],
+        ),
+        context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +117,16 @@ class _UserLoginState extends State<UserLogin> {
                     showSpinner = true;
                   });
                   try {
-                    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((currentUser) =>
-                        FirebaseFirestore.instance.collection("Firms"));
-                    if (user != null) {
+                    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                    final user = userCredential.user;
+                    final userSnapShot = await FirebaseFirestore.instance.collection('Firms').where("uid",isEqualTo: user?.uid).get();
+                    if (userSnapShot.docs.isNotEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const userdivision()));
+                    }else{
+                      ToastManager.showToastShort(msg: "You're not authorized!!!");
                     }
                   } catch (e) {
+                    ToastManager.showToastShort(msg: "You're not authorized!!!");
                     if (kDebugMode) {
                       print(e);
                     }

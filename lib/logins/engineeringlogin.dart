@@ -6,6 +6,8 @@ import '../querypage.dart';
 import '../registers/engineeringregister.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../toast_manager.dart';
+
 class EngineeringLogin extends StatefulWidget {
   const EngineeringLogin({Key? key}) : super(key: key);
 
@@ -17,6 +19,22 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
   late String email;
   late String password;
   bool showSpinner = false;
+
+  Future _showDialog(BuildContext context, String message) async {
+    return showDialog(
+        builder: (context) => AlertDialog(
+          title: Text(message),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("ok"))
+          ],
+        ),
+        context: context);
+  }
+
   @override
   void initState(){
     super.initState();}
@@ -114,13 +132,19 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
                               onPressed:()async{
                                 setState((){showSpinner = true;});
                                 try{
-                                  final user = await FirebaseAuth.instance.signInWithEmailAndPassword(email:email,password:password).then((currentUser) =>
-                                      FirebaseFirestore.instance.collection("engineer"));
-                                  if(user!= null){
+                                  final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                                  final user = userCredential.user;
+                                  final userSnapShot = await FirebaseFirestore.instance.collection('engineer').where("uid",isEqualTo: user?.uid).get();
+                                  if (userSnapShot.docs.isNotEmpty) {
                                   Navigator.push(
                                       context,MaterialPageRoute(builder:(context)=>const engineer())
-                                  );}}
-                                catch(e){if (kDebugMode) {
+                                  );}else{
+                                    ToastManager.showToastShort(msg: "You're not authorized!!!");
+                                  }
+                                }
+                                catch(e){
+                                  ToastManager.showToastShort(msg: "You're not authorized!!!");
+                                  if (kDebugMode) {
                                   print(e);
                                 }}
                                 setState((){showSpinner = false;});},
