@@ -31,75 +31,86 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           'Forget Password',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15.0,
+            // fontSize: 15.0,
           ),
         ),
+        centerTitle: true,
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
-        child: Center(
-          child: Card(
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: const Text(
-                      "Enter your email address to reset the password of your account",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 300,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/forget_image.jpg"), fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 450,
+                decoration: const BoxDecoration(
+                    boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)],
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                    image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: const Center(
+                        child: Text(
+                          "Reset your password vibes: Drop your email and let the magic happen! 🌟",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0, right: 20),
-                    child: buildTextField(
-                        labelText: "Email",
-                        hintText: "abc@gmail.com",
-                        textInputType: TextInputType.emailAddress,
-                        textEditingController: _emailController,
-                        prefixIcon: Icon(Icons.alternate_email_rounded)),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => _resetPassword(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          // textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                          // shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20),
+                      child: buildTextField(
+                          labelText: "Email",
+                          hintText: "abc@gmail.com",
+                          textInputType: TextInputType.emailAddress,
+                          textEditingController: _emailController,
+                          prefixIcon: Icon(Icons.alternate_email_rounded)),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => _resetPassword(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          child: const Text("Send mail", style: TextStyle(color: Colors.white)),
                         ),
-                        child: const Text("Reset Password", style: TextStyle(color: Colors.white)),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          // textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                          // shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text("Cancel", style: TextStyle(color: Colors.white)),
                         ),
-                        child: const Text("Cancel", style: TextStyle(color: Colors.white)),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

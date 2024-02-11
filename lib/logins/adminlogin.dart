@@ -138,7 +138,10 @@ class _AdminLoginState extends State<AdminLogin> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
+                        setState(() {
+                          emailController.clear();
+                          passwordController.clear();
+                        });
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shadowColor: Colors.blueGrey),
                       child: const Text(
