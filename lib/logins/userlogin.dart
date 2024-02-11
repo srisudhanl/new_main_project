@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../forget_password_screen.dart';
 import '../querypage.dart';
@@ -25,15 +24,15 @@ class _UserLoginState extends State<UserLogin> {
   Future _showDialog(BuildContext context, String message) async {
     return showDialog(
         builder: (context) => AlertDialog(
-          title: Text(message),
-          actions: <Widget>[
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("ok"))
-          ],
-        ),
+              title: Text(message),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("ok"))
+              ],
+            ),
         context: context);
   }
 
@@ -120,17 +119,21 @@ class _UserLoginState extends State<UserLogin> {
                   try {
                     final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
                     final user = userCredential.user;
-                    final userSnapShot = await FirebaseFirestore.instance.collection('Firms').where("uid",isEqualTo: user?.uid).get();
+                    final userSnapShot = await FirebaseFirestore.instance.collection('Firms').where("uid", isEqualTo: user?.uid).get();
+                    if (!user!.emailVerified) {
+                      await user.sendEmailVerification();
+                      return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
+                    }
                     if (userSnapShot.docs.isNotEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
-                    }else{
-                      ToastManager.showToastShort(msg: "You're not authorized!!!");
+                    } else {
+                      return ToastManager.showToastShort(msg: "You're not authorized!!!");
                     }
                   } catch (e) {
-                    ToastManager.showToastShort(msg: "You're not authorized!!!");
                     if (kDebugMode) {
                       print(e);
                     }
+                    return ToastManager.showToastShort(msg: "You're not authorized!!!");
                   }
                   setState(() {
                     showSpinner = false;
@@ -159,19 +162,19 @@ class _UserLoginState extends State<UserLogin> {
                 ),
               )
             ]),
-                Align(
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
-                    child: const Text(
-                      "Forget Password ?",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 20,
-                      ),
-                    ),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
+                child: const Text(
+                  "Forget Password ?",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20,
                   ),
                 ),
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(

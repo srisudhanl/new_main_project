@@ -125,16 +125,20 @@ class _MbaLoginState extends State<MbaLogin> {
                       final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
                       final user = userCredential.user;
                       final userSnapShot = await FirebaseFirestore.instance.collection('MbaStudent').where("uid",isEqualTo: user?.uid).get();
+                      if (!user!.emailVerified) {
+                        await user.sendEmailVerification();
+                        return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
+                      }
                       if (userSnapShot.docs.isNotEmpty) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const MBA()));
                       }else{
-                        ToastManager.showToastShort(msg: "You're not authorized!!!");
+                        return ToastManager.showToastShort(msg: "You're not authorized!!!");
                       }
                     } catch (e) {
-                      ToastManager.showToastShort(msg: "You're not authorized!!!");
                       if (kDebugMode) {
                         print(e);
                       }
+                      return ToastManager.showToastShort(msg: "You're not authorized!!!");
                     }
                     setState(() {
                       showSpinner = false;

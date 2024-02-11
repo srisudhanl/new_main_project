@@ -265,7 +265,8 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                         });
                         try {
                           print(apaarNumber);
-                          final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
+                          final snapshot =
+                              await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
                           final academicDetails = snapshot.docs[0] as DocumentSnapshot;
                           sslcMark = academicDetails['sslc'];
                           hscMark = academicDetails['hsc'];
@@ -332,12 +333,17 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
                                           "password": password,
                                           "cpassword": cpassword,
                                         })
+                                        .then(
+                                          (currentUser) => {
+                                            FirebaseAuth.instance.currentUser?.sendEmailVerification(),
+                                            ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.")
+                                          },
+                                        )
                                         .then((result) => {
                                               FirebaseAuth.instance
                                                   .signOut()
                                                   .then((result) => {
                                                         Navigator.pop(context),
-
                                                       })
                                                   .catchError((err) => print(err)),
                                             })
@@ -403,6 +409,7 @@ class _EngineeringRegisterState extends State<EngineeringRegister> {
       print('Launch url error : $e');
     }
   }
+
   void refresh() {
     if (mounted) setState(() {});
   }

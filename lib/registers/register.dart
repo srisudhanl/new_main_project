@@ -264,7 +264,8 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                           showSpinner = true;
                         });
                         try {
-                          final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
+                          final snapshot =
+                              await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
                           final academicDetails = snapshot.docs[0] as DocumentSnapshot;
                           sslcMark = academicDetails['sslc'];
                           hscMark = academicDetails['hsc'];
@@ -299,53 +300,61 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
                           textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
-                      onPressed: isVerified?() async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        try {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(email: email, password: password)
-                              .then((currentUser) => FirebaseFirestore.instance
-                                  .collection("ArtsStudent")
-                                  .doc(currentUser.user?.uid)
-                                  .set({
-                                    "uid": currentUser.user?.uid,
-                                    "firstname": firstname,
-                                    "lastname": lastname,
-                                    "email": email,
-                                    "address": address,
-                                    "phno": phno,
-                                    "yop1": yop1,
-                                    "HSC": hscMark,
-                                    "SSLC": sslcMark,
-                                    "yop2": yop2,
-                                    "CID": cid,
-                                    "CGPA": cgpa,
-                                    "yop3": yop3,
-                                    "intern": intern,
-                                    "implant": implant,
-                                    "AOI": aoi,
-                                    "password": password,
-                                    "cpassword": cpassword,
-                                  })
-                                  .then((result) => {
-                                        FirebaseAuth.instance
-                                            .signOut()
-                                            .then((result) => {
-                                                  Navigator.pop(context),
-                                                })
-                                            .catchError((err) => print(err)),
-                                      })
-                                  .catchError((err) => print(err)));
-                        } catch (e) {
-                          if (kDebugMode) {
-                            print(e);
-                          }
-                        }
-                        Navigator.pop(context);
-                        ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
-                      }:null,
+                      onPressed: isVerified
+                          ? () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                await FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(email: email, password: password)
+                                    .then((currentUser) => FirebaseFirestore.instance
+                                        .collection("ArtsStudent")
+                                        .doc(currentUser.user?.uid)
+                                        .set({
+                                          "uid": currentUser.user?.uid,
+                                          "firstname": firstname,
+                                          "lastname": lastname,
+                                          "email": email,
+                                          "address": address,
+                                          "phno": phno,
+                                          "yop1": yop1,
+                                          "HSC": hscMark,
+                                          "SSLC": sslcMark,
+                                          "yop2": yop2,
+                                          "CID": cid,
+                                          "CGPA": cgpa,
+                                          "yop3": yop3,
+                                          "intern": intern,
+                                          "implant": implant,
+                                          "AOI": aoi,
+                                          "password": password,
+                                          "cpassword": cpassword,
+                                        })
+                                        .then(
+                                          (currentUser) => {
+                                            FirebaseAuth.instance.currentUser?.sendEmailVerification(),
+                                            ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.")
+                                          },
+                                        )
+                                        .then((result) => {
+                                              FirebaseAuth.instance
+                                                  .signOut()
+                                                  .then((result) => {
+                                                        Navigator.pop(context),
+                                                      })
+                                                  .catchError((err) => print(err)),
+                                            })
+                                        .catchError((err) => print(err)));
+                              } catch (e) {
+                                if (kDebugMode) {
+                                  print(e);
+                                }
+                              }
+                              Navigator.pop(context);
+                              ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
+                            }
+                          : null,
                       child: const Text(
                         "register/submit",
                         style: TextStyle(color: Colors.white),
@@ -385,6 +394,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
       ),
     );
   }
+
   void launchUrlToBrowser(String url, {LaunchMode mode = LaunchMode.externalApplication}) async {
     try {
       Uri? uri = Uri.tryParse(url);
@@ -394,7 +404,7 @@ class _ArtsStudentRegisterState extends State<ArtsStudentRegister> {
         print('URI cannot be null.');
       }
     } catch (e) {
-      print( 'Launch url error : $e');
+      print('Launch url error : $e');
     }
   }
 

@@ -80,9 +80,7 @@ class _MbaRegisterState extends State<MbaRegister> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-        decoration: const BoxDecoration(
-            image:
-                DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -266,7 +264,8 @@ class _MbaRegisterState extends State<MbaRegister> {
                           showSpinner = true;
                         });
                         try {
-                          final snapshot = await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
+                          final snapshot =
+                              await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
                           final academicDetails = snapshot.docs[0] as DocumentSnapshot;
                           sslcMark = academicDetails['sslc'];
                           hscMark = academicDetails['hsc'];
@@ -290,7 +289,10 @@ class _MbaRegisterState extends State<MbaRegister> {
                           textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
-                      child: const Text("Verify",style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        "Verify",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -298,51 +300,65 @@ class _MbaRegisterState extends State<MbaRegister> {
                           textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
                           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
-                      onPressed: isVerified?() async {
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        try {
-                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                              email: email,
-                              password: password).then((currentUser) =>
-                              FirebaseFirestore.instance.collection("MbaStudent")
-                                  .doc(currentUser.user?.uid).set({
-                                "uid": currentUser.user?.uid,
-                                "firstname": firstname,
-                                "lastname": lastname,
-                                "email": email,
-                                "address": address,
-                                "phno": phno,
-                                "yop1": yop1,
-                                "HSC": hscMark,
-                                "SSLC": sslcMark,
-                                "yop2": yop2,
-                                "CID": cid,
-                                "CGPA":cgpa,
-                                "yop3": yop3,
-                                "intern": intern,
-                                "implant": implant,
-                                "AOI":aoi,
-                                "password": password,
-                                "cpassword": cpassword,
-                              }).then((result) =>
-                              {FirebaseAuth.instance.signOut().then((result) =>
-                              {
-                                Navigator.pop(context),
-
-                              }).catchError(
-                                      (err) => print(err)),}).catchError((err) =>
-                                  print(err)));
-                        } catch (e) {
-                          if (kDebugMode) {
-                            print(e);
-                          }
-                        }
-                        Navigator.pop(context);
-                        ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
-                      }:null,
-                      child: const Text("register/submit",style: TextStyle(color: Colors.white),),
+                      onPressed: isVerified
+                          ? () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                await FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(email: email, password: password)
+                                    .then((currentUser) => FirebaseFirestore.instance
+                                        .collection("MbaStudent")
+                                        .doc(currentUser.user?.uid)
+                                        .set({
+                                          "uid": currentUser.user?.uid,
+                                          "firstname": firstname,
+                                          "lastname": lastname,
+                                          "email": email,
+                                          "address": address,
+                                          "phno": phno,
+                                          "yop1": yop1,
+                                          "HSC": hscMark,
+                                          "SSLC": sslcMark,
+                                          "yop2": yop2,
+                                          "CID": cid,
+                                          "CGPA": cgpa,
+                                          "yop3": yop3,
+                                          "intern": intern,
+                                          "implant": implant,
+                                          "AOI": aoi,
+                                          "password": password,
+                                          "cpassword": cpassword,
+                                        })
+                                        .then(
+                                          (currentUser) => {
+                                            FirebaseAuth.instance.currentUser?.sendEmailVerification(),
+                                            ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.")
+                                          },
+                                        )
+                                        .then((result) => {
+                                              FirebaseAuth.instance
+                                                  .signOut()
+                                                  .then((result) => {
+                                                        Navigator.pop(context),
+                                                      })
+                                                  .catchError((err) => print(err)),
+                                            })
+                                        .catchError((err) => print(err)));
+                              } catch (e) {
+                                if (kDebugMode) {
+                                  print(e);
+                                }
+                              }
+                              Navigator.pop(context);
+                              ToastManager.showToastShort(msg: "Data saved Succesfully!!!");
+                            }
+                          : null,
+                      child: const Text(
+                        "register/submit",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -364,7 +380,10 @@ class _MbaRegisterState extends State<MbaRegister> {
                         txtapaar.clear();
                         txtcpassword.clear();
                       },
-                      child: const Text("Clear",style: TextStyle(color: Colors.white),),
+                      child: const Text(
+                        "Clear",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -385,9 +404,10 @@ class _MbaRegisterState extends State<MbaRegister> {
         print('URI cannot be null.');
       }
     } catch (e) {
-      print( 'Launch url error : $e');
+      print('Launch url error : $e');
     }
   }
+
   void refresh() {
     if (mounted) setState(() {});
   }
