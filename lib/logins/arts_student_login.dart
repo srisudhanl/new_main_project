@@ -18,9 +18,9 @@ class ArtsStudentLogin extends StatefulWidget {
 }
 
 class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
-  late String email;
-  late String password;
   bool showSpinner = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   Future _showDialog(BuildContext context, String message) async {
     return showDialog(
@@ -97,9 +97,7 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                     child: buildTextField(
                         labelText: "Enter Email",
                         hintText: "email address",
-                        onChanged: (value) {
-                          email = value;
-                        },
+                        textEditingController: emailController,
                         textInputType: TextInputType.emailAddress),
                   ),
                   Container(
@@ -112,9 +110,7 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                     child: buildTextField(
                         labelText: "Enter Password",
                         hintText: "Password",
-                        onChanged: (value) {
-                          password = value;
-                        },
+                        textEditingController: passwordController,
                         textInputType: TextInputType.text),
                   ),
                   Container(
@@ -133,8 +129,8 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                             showSpinner = true;
                           });
                           try {
-                            final userCredential =
-                                await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                            final userCredential = await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
                             final user = userCredential.user;
                             final userSnapShot = await FirebaseFirestore.instance
                                 .collection('ArtsStudent')
@@ -165,7 +161,10 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                         )),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ArtsStudentLogin()));
+                        setState(() {
+                          emailController.clear();
+                          passwordController.clear();
+                        });
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shadowColor: Colors.blueGrey),
                       child: const Text("Cancel", style: TextStyle(color: Colors.white)),
