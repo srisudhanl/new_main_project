@@ -2,6 +2,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project1/forget_password_screen.dart';
+import 'package:main_project1/logins/MBAlogin.dart';
+import 'package:main_project1/logins/arts_student_login.dart';
 import 'package:main_project1/querypage.dart';
 
 import 'logindivision.dart';
@@ -9,12 +12,13 @@ import 'logins/adminlogin.dart';
 import 'logins/userlogin.dart';
 
 Future<void> main() async {
+  bool isTesting = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent)),
-    home: const Splash(),
+    home: isTesting ? ArtsStudentLogin() : Splash(),
   ));
 }
 
@@ -129,7 +133,7 @@ class _MyAppState extends State<MyApp> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Container(
             color: Colors.transparent,
@@ -209,7 +213,9 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ),
-          SizedBox(height: 100,)
+          SizedBox(
+            height: 100,
+          )
         ]),
       ),
     );

@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project1/custom_widgets/custom_text_field.dart';
 
 import '../forget_password_screen.dart';
-import '../pages/student.dart';
+import '../pages/arts_student.dart';
 import '../querypage.dart';
 import '../registers/register.dart';
 import '../toast_manager.dart';
@@ -24,15 +25,15 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
   Future _showDialog(BuildContext context, String message) async {
     return showDialog(
         builder: (context) => AlertDialog(
-          title: Text(message),
-          actions: <Widget>[
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("ok"))
-          ],
-        ),
+              title: Text(message),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("ok"))
+              ],
+            ),
         context: context);
   }
 
@@ -71,7 +72,8 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
               width: double.infinity,
               height: 250,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/engineering_login.jpeg"), fit: BoxFit.cover)),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(image: AssetImage("assets/engineering_login.jpeg"), fit: BoxFit.cover)),
             ),
 
             const Text(
@@ -83,13 +85,10 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
             ), //Text
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Enter Email:',
-                  hintText: 'email address',
-                ), //InputDecoration
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
+              child: buildTextField(
+                labelText: 'Enter Email:',
+                hintText: 'email address',
+                textInputType: TextInputType.emailAddress,
                 onChanged: (value) {
                   email = value;
                 },
@@ -137,16 +136,18 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                       showSpinner = true;
                     });
                     try {
-                      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                      final userCredential =
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
                       final user = userCredential.user;
-                      final userSnapShot = await FirebaseFirestore.instance.collection('ArtsStudent').where("uid",isEqualTo: user?.uid).get();
+                      final userSnapShot =
+                          await FirebaseFirestore.instance.collection('ArtsStudent').where("uid", isEqualTo: user?.uid).get();
                       if (!user!.emailVerified) {
                         await user.sendEmailVerification();
                         return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
                       }
                       if (userSnapShot.docs.isNotEmpty) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const Student()));
-                      }else{
+                      } else {
                         return ToastManager.showToastShort(msg: "You're not authorized!!!");
                       }
                     } catch (e) {
@@ -178,19 +179,19 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                 ),
               )
             ]),
-                Align(
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
-                    child: const Text(
-                      "Forget Password ?",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 20,
-                      ),
-                    ),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
+                child: const Text(
+                  "Forget Password ?",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20,
                   ),
                 ),
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
@@ -208,7 +209,9 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green, shadowColor: Colors.redAccent),
+                            textStyle: const TextStyle(fontSize: 20),
+                            backgroundColor: Colors.green,
+                            shadowColor: Colors.redAccent),
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ArtsStudentRegister()));
                         },
