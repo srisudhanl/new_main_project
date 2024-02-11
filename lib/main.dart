@@ -12,7 +12,7 @@ import 'logins/adminlogin.dart';
 import 'logins/userlogin.dart';
 
 Future<void> main() async {
-  bool isTesting = true;
+  bool isTesting = false;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(

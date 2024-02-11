@@ -174,7 +174,7 @@ class _AdminState extends State<Admin> {
                           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
                           shadowColor: Colors.blueGrey),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const newfirm()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const NewFirm()));
                       },
                       child: const Text("Click Here",style: TextStyle(color: Colors.blue),),
                     ),

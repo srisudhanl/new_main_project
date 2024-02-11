@@ -124,7 +124,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   try {
                     final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
                     final user = userCredential.user;
-                    final userSnapShot = await FirebaseFirestore.instance.collection('admin').where("uid",isEqualTo: user?.uid).get();
+                    final userSnapShot = await FirebaseFirestore.instance.collection('admin').where("email",isEqualTo: user?.email).get();
                     if (userSnapShot.docs.isNotEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const Admin()));
                     }else{
