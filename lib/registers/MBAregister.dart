@@ -264,6 +264,16 @@ class _MbaRegisterState extends State<MbaRegister> {
                           showSpinner = true;
                         });
                         try {
+                          final artsStudent = await FirebaseFirestore.instance
+                              .collection('ArtsStudent')
+                              .where('apaar number', isEqualTo: apaarNumber)
+                              .get();
+                          final engineer =
+                              await FirebaseFirestore.instance.collection('engineer').where('apaar number', isEqualTo: apaarNumber).get();
+                          final mbaStudent =
+                              await FirebaseFirestore.instance.collection('MbaStudent').where('apaar number', isEqualTo: apaarNumber).get();
+                          if ((artsStudent.docs.isNotEmpty || engineer.docs.isNotEmpty || mbaStudent.docs.isNotEmpty))
+                            return ToastManager.showToastShort(msg: "Check Apaar Number .This is authorized by other user");
                           final snapshot =
                               await FirebaseFirestore.instance.collection('depository').where('apaar number', isEqualTo: apaarNumber).get();
                           final academicDetails = snapshot.docs[0] as DocumentSnapshot;
@@ -320,6 +330,7 @@ class _MbaRegisterState extends State<MbaRegister> {
                                           "phno": phno,
                                           "yop1": yop1,
                                           "HSC": hscMark,
+                                          "apaar number": apaarNumber,
                                           "SSLC": sslcMark,
                                           "yop2": yop2,
                                           "CID": cid,
