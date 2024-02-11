@@ -97,9 +97,6 @@ class _engineerState extends State<engineer> {
                     ListTile(
                       title: Text("Area of Interest :$myAOI"),
                     ),
-                    ListTile(
-                      title: Text("PassWord         :$mypassword"),
-                    ),
                   ],
                 ),
               ),

@@ -97,9 +97,6 @@ class _MBAState extends State<MBA> {
                     ListTile(
                       title: Text("Area of Interest :$myAOI"),
                     ),
-                    ListTile(
-                      title: Text("PassWord         :$mypassword"),
-                    ),
                   ],
                 ),
               ),

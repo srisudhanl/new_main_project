@@ -94,9 +94,6 @@ class _StudentState extends State<Student> {
                     ListTile(
                       title: Text("Area of Interest :$myAOI"),
                     ),
-                    ListTile(
-                      title: Text("PassWord         :$mypassword"),
-                    ),
                   ],
                 ),
               ),
