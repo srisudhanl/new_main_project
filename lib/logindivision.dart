@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'logins/MBAlogin.dart';
 import 'logins/engineeringlogin.dart';
-import 'logins/studentlogin.dart';
+import 'logins/arts_student_login.dart';
 
 class LoginDivision extends StatefulWidget {
   const LoginDivision({Key? key}) : super(key: key);

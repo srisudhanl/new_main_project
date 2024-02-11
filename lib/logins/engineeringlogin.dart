@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:main_project1/forget_password_screen.dart';
 
-import '../pages/engineer.dart';
+import '../pages/engineer_student.dart';
 import '../querypage.dart';
 import '../registers/engineeringregister.dart';
 import '../toast_manager.dart';
@@ -71,7 +71,8 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
               height: 250,
               width: double.infinity,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/engineering_login.jpeg"), fit: BoxFit.cover)),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(image: AssetImage("assets/engineering_login.jpeg"), fit: BoxFit.cover)),
             ),
             const Text(
               'Engineer Login',
@@ -132,9 +133,11 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
                       showSpinner = true;
                     });
                     try {
-                      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                      final userCredential =
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
                       final user = userCredential.user;
-                      final userSnapShot = await FirebaseFirestore.instance.collection('engineer').where("uid", isEqualTo: user?.uid).get();
+                      final userSnapShot =
+                          await FirebaseFirestore.instance.collection('engineer').where("uid", isEqualTo: user?.uid).get();
                       if (!user!.emailVerified) {
                         await user.sendEmailVerification();
                         return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
@@ -196,7 +199,9 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green, shadowColor: Colors.redAccent),
+                            textStyle: const TextStyle(fontSize: 20),
+                            backgroundColor: Colors.green,
+                            shadowColor: Colors.redAccent),
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const EngineeringRegister()));
                         },
