@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../forget_password_screen.dart';
 import '../querypage.dart';
 import '../registers/firmcollect.dart';
 import '../toast_manager.dart';
@@ -158,6 +159,19 @@ class _UserLoginState extends State<UserLogin> {
                 ),
               )
             ]),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
+                    child: const Text(
+                      "Forget Password ?",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(

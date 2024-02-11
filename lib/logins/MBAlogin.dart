@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../forget_password_screen.dart';
 import '../pages/MBA.dart';
 import '../querypage.dart';
 import '../registers/MBAregister.dart';
@@ -152,6 +153,19 @@ class _MbaLoginState extends State<MbaLogin> {
                 child: const Text("Cancel",style: TextStyle(color: Colors.white)),
               )
             ]),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
+                    child: const Text(
+                      "Forget Password ?",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
