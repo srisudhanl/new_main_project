@@ -16,7 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
+    debugShowCheckedModeBanner: true,
     theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent), fontFamily: 'Serif'),
     home: isTesting ? LoginDivision() : Splash(),
   ));

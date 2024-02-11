@@ -41,12 +41,11 @@ class _LoginDivisionState extends State<LoginDivision> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ArtsStudentLogin()));
                   },
                   style: ElevatedButton.styleFrom(
-                      // backgroundColor: Colors.green,
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       shadowColor: Colors.blueGrey),
-                  child: const Text(
+                  child: Text(
                     "Login for Arts student",
-                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                     textAlign: TextAlign.center,
                   )),
             ),
@@ -59,12 +58,11 @@ class _LoginDivisionState extends State<LoginDivision> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const EngineeringLogin()));
                   },
                   style: ElevatedButton.styleFrom(
-                      // backgroundColor: Colors.green,
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       shadowColor: Colors.blueGrey),
-                  child: const Text(
+                  child: Text(
                     "Login for engineering student",
-                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                     textAlign: TextAlign.center,
                   )),
             ),
@@ -77,12 +75,11 @@ class _LoginDivisionState extends State<LoginDivision> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const MbaLogin()));
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       shadowColor: Colors.blueGrey),
-                  child: const Text(
+                  child: Text(
                     "Login for MBA student",
-                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                     textAlign: TextAlign.center,
                   )),
             ),
