@@ -104,7 +104,7 @@ class _StudentState extends State<Student> {
     );
   }
 
-  _fetch() async {
+  Future<void> _fetch() async {
     final firebaseuser = await FirebaseAuth.instance.currentUser;
     if (firebaseuser != null) {
       await FirebaseFirestore.instance.collection('ArtsStudent').doc(firebaseuser.uid).get().then((ds) {

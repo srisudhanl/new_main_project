@@ -107,7 +107,7 @@ class _MBAState extends State<MBA> {
     );
   }
 
-  _fetch() async {
+  Future<void> _fetch() async {
     final firebaseuser = await FirebaseAuth.instance.currentUser;
     if (firebaseuser != null) {
       await FirebaseFirestore.instance.collection('MbaStudent').doc(firebaseuser.uid).get().then((ds) {

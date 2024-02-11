@@ -47,7 +47,7 @@ class _UserDivisionState extends State<UserDivision> {
                         shadowColor: Colors.blueGrey),
                     onPressed:() {
                       Navigator.push(
-                          context,MaterialPageRoute(builder:(context)=>const firm()));
+                          context,MaterialPageRoute(builder:(context)=>const ArtsFirm()));
                     },
                     child: const Text("Arts student",style:TextStyle(
                       fontSize:30.0,
@@ -74,7 +74,7 @@ class _UserDivisionState extends State<UserDivision> {
                           shadowColor: Colors.blueGrey),
                       onPressed:() {
                         Navigator.push(
-                            context,MaterialPageRoute(builder:(context)=>const engineerfirm()));
+                            context,MaterialPageRoute(builder:(context)=>const EngineerFirm()));
                       },
                       child: const Text("Engineering Student",style:TextStyle(
                         fontSize:30.0,
@@ -100,7 +100,7 @@ class _UserDivisionState extends State<UserDivision> {
                           shadowColor: Colors.blueGrey),
                       onPressed:() {
                         Navigator.push(
-                            context,MaterialPageRoute(builder:(context)=>const MBAfirm()));
+                            context,MaterialPageRoute(builder:(context)=>const MbaFirm()));
                       },
                       child: const Text("MBA Student",style:TextStyle(
                         fontSize:30.0,
