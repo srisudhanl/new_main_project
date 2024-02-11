@@ -19,8 +19,8 @@ class MbaLogin extends StatefulWidget {
 }
 
 class _MbaLoginState extends State<MbaLogin> {
-  late String email;
-  late String password;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool showSpinner = false;
 
   @override
@@ -83,9 +83,7 @@ class _MbaLoginState extends State<MbaLogin> {
                     child: buildTextField(
                         labelText: "Enter Email",
                         hintText: "email address",
-                        onChanged: (value) {
-                          email = value;
-                        },
+                        textEditingController: emailController,
                         textInputType: TextInputType.emailAddress),
                   ),
                   Container(
@@ -98,9 +96,7 @@ class _MbaLoginState extends State<MbaLogin> {
                     child: buildTextField(
                         labelText: "Enter Password",
                         hintText: "Password",
-                        onChanged: (value) {
-                          password = value;
-                        },
+                        textEditingController: passwordController,
                         textInputType: TextInputType.text),
                   ),
                   Container(
@@ -119,8 +115,8 @@ class _MbaLoginState extends State<MbaLogin> {
                             showSpinner = true;
                           });
                           try {
-                            final userCredential =
-                                await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                            final userCredential = await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
                             final user = userCredential.user;
                             final userSnapShot = await FirebaseFirestore.instance
                                 .collection('MbaStudent')
@@ -151,7 +147,10 @@ class _MbaLoginState extends State<MbaLogin> {
                         )),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MbaLogin()));
+                        setState(() {
+                          emailController.clear();
+                          passwordController.clear();
+                        });
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shadowColor: Colors.blueGrey),
                       child: const Text("Cancel", style: TextStyle(color: Colors.white)),

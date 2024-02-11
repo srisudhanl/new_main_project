@@ -12,13 +12,13 @@ import 'logins/adminlogin.dart';
 import 'logins/userlogin.dart';
 
 Future<void> main() async {
-  bool isTesting = false;
+  bool isTesting = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent)),
-    home: isTesting ? ArtsStudentLogin() : Splash(),
+    home: isTesting ? AdminLogin() : Splash(),
   ));
 }
 
