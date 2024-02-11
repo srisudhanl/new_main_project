@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../querypage.dart';
 
-class engineer extends StatefulWidget {
-  const engineer({Key? key}) : super(key: key);
+class EngineerStudent extends StatefulWidget {
+  const EngineerStudent({Key? key}) : super(key: key);
 
   @override
-  State<engineer> createState() => _engineerState();
+  State<EngineerStudent> createState() => _EngineerStudentState();
 }
 
-class _engineerState extends State<engineer> {
+class _EngineerStudentState extends State<EngineerStudent> {
   late String myfirstname, mylastname, myaddress, myphno;
   late String mySSLC, myyop1, myHSC, myyop2;
   late String myCID, myCGPA, myyop3, myintern;
@@ -46,10 +46,8 @@ class _engineerState extends State<engineer> {
             }
             return SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/background.jpeg"),
-                        fit: BoxFit.cover)),
+                decoration:
+                    const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
                 child: Column(
                   children: <Widget>[
                     ListTile(

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../custom_widgets/custom_text_field.dart';
 import '../forget_password_screen.dart';
 import '../querypage.dart';
 import '../registers/firmcollect.dart';
@@ -59,152 +60,154 @@ class _UserLoginState extends State<UserLogin> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
           child: SingleChildScrollView(
               child: Column(children: <Widget>[
             Container(
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/user_login.jpeg"), fit: BoxFit.cover)),
-              height: 250,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(image: AssetImage("assets/user_login.jpeg"), fit: BoxFit.contain)),
+              height: 200,
               width: double.infinity,
             ),
-            const Text(
-              'Login Details',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 35.0,
-              ), //TextStyle
-            ), //Text
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Enter Email:',
-                hintText: 'email address',
-              ), //InputDecoration
-              autocorrect: false,
-              onChanged: (value) {
-                email = value;
-              },
-              keyboardType: TextInputType.emailAddress,
-            ),
+            SizedBox(height: 15),
             Container(
-              color: Colors.transparent,
-              height: 30,
-              width: double.infinity,
-            ),
-            TextField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Enter PassWord:',
-                hintText: 'Password',
-              ),
-              //InputDecoration
-              autocorrect: false,
-              onChanged: (value) {
-                password = value;
-              },
-              keyboardType: TextInputType.text,
-            ),
-            Container(
-              color: Colors.transparent,
-              height: 50,
-              width: double.infinity,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-              ElevatedButton(
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
-                  try {
-                    final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-                    final user = userCredential.user;
-                    final userSnapShot = await FirebaseFirestore.instance.collection('Firms').where("uid", isEqualTo: user?.uid).get();
-                    if (!user!.emailVerified) {
-                      await user.sendEmailVerification();
-                      return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
-                    }
-                    if (userSnapShot.docs.isNotEmpty) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
-                    } else {
-                      return ToastManager.showToastShort(msg: "You're request is in process.Please wait!!!");
-                    }
-                  } catch (e) {
-                    if (kDebugMode) {
-                      print(e);
-                    }
-                    return ToastManager.showToastShort(msg: "You're not authorized!!!");
-                  }
-                  setState(() {
-                    showSpinner = false;
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                    shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
-                    shadowColor: Colors.blueGrey),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                    shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
-                    shadowColor: Colors.blueGrey),
-                child: const Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            ]),
-            Align(
-              alignment: Alignment.center,
-              child: TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
-                child: const Text(
-                  "Forget Password ?",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 20,
+              height: 600,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                  image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover),
+                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  const Text(
+                    'Login Details',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 35.0,
+                    ), //TextStyle
                   ),
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      "Don't Have an Account!!",
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green, shadowColor: Colors.redAccent),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const FirmCollect()));
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: buildTextField(
+                        labelText: "Enter Email",
+                        hintText: "email address",
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        textInputType: TextInputType.emailAddress),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 20,
+                    width: double.infinity,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: buildTextField(
+                        labelText: "Enter Password",
+                        hintText: "Password",
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        textInputType: TextInputType.text),
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    height: 25,
+                    width: double.infinity,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
+                            shadowColor: Colors.blueGrey),
+                        onPressed: () async {
+                          setState(() {
+                            showSpinner = true;
+                          });
+                          try {
+                            final userCredential =
+                                await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                            final user = userCredential.user;
+                            final userSnapShot = await FirebaseFirestore.instance
+                                .collection('ArtsStudent')
+                                .where("uid", isEqualTo: user?.uid)
+                                .get();
+                            if (!user!.emailVerified) {
+                              await user.sendEmailVerification();
+                              return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
+                            }
+                            if (userSnapShot.docs.isNotEmpty) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
+                            } else {
+                              return ToastManager.showToastShort(msg: "You're not authorized!!!");
+                            }
+                          } catch (e) {
+                            if (kDebugMode) {
+                              print(e);
+                            }
+                            return ToastManager.showToastShort(msg: "You're not authorized!!!");
+                          }
+                          setState(() {
+                            showSpinner = false;
+                          });
                         },
                         child: const Text(
-                          "Sign Up",
+                          "Login",
                           style: TextStyle(color: Colors.white),
-                        ),
+                        )),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shadowColor: Colors.blueGrey),
+                      child: const Text("Cancel", style: TextStyle(color: Colors.white)),
+                    )
+                  ]),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.center,
+                    child: TextButton(
+                      style: TextButton.styleFrom(surfaceTintColor: Colors.purpleAccent),
+                      onPressed: () =>
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordScreen())),
+                      child: Text(
+                        "Forget Password ?",
+                        style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Text(
+                            "Doesn't have an account!!",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: TextButton(
+                              style:
+                                  TextButton.styleFrom(textStyle: const TextStyle(fontSize: 15), shadowColor: Colors.redAccent),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const FirmCollect()));
+                              },
+                              child: Text("Sign Up", style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ])),
