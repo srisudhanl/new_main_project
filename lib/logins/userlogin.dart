@@ -127,10 +127,8 @@ class _UserLoginState extends State<UserLogin> {
                             final userCredential = await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
                             final user = userCredential.user;
-                            final userSnapShot = await FirebaseFirestore.instance
-                                .collection('ArtsStudent')
-                                .where("uid", isEqualTo: user?.uid)
-                                .get();
+                            final userSnapShot =
+                                await FirebaseFirestore.instance.collection('Firms').where("uid", isEqualTo: user?.uid).get();
                             if (!user!.emailVerified) {
                               await user.sendEmailVerification();
                               return ToastManager.showToastShort(msg: "Verification email sent. Check your inbox.");
