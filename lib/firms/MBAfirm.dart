@@ -249,10 +249,12 @@ class _MbaFirmState extends State<MbaFirm> {
               onPressed: () async {
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
                 final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
-                await FirebaseFirestore.instance.collection('Placement').add(
+                final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
+                await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
                     {
                       'firmId':currentUserId,
                       'studentId':student.data()['uid'],
+                      'uid':docId,
                       'msg':"Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
                       'firmAddress':currentUser.docs[0].data()['address'],
                       'firmPhno':currentUser.docs[0].data()['phno'],

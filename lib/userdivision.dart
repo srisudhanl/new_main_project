@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project1/firm_interview_over_view_screen.dart';
 import 'firms/MBAfirm.dart';
 import 'firms/engineerfirm.dart';
 import 'firms/firm.dart';
@@ -11,6 +14,7 @@ class UserDivision extends StatefulWidget {
 }
 
 class _UserDivisionState extends State<UserDivision> {
+  final currentUserId = FirebaseAuth.instance.currentUser?.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +25,9 @@ class _UserDivisionState extends State<UserDivision> {
             fontSize: 15.0,
           ),
         ),
+        actions: [
+          IconButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>FirmInterviewOverViewScreen(firmId: currentUserId!))), icon: Icon(Icons.info_outline_rounded))
+        ],
       ),
       body: Container(
         width: double.infinity,
