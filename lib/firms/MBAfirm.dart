@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../querypage.dart';
+import '../toast_manager.dart';
 
 class MbaFirm extends StatefulWidget {
   const MbaFirm({Key? key}) : super(key: key);
@@ -117,6 +119,7 @@ class _MbaFirmState extends State<MbaFirm> {
                           ),
                           horizontalTitleGap: 15,
                           tileColor: Colors.white,
+                          onTap: () => _showDetailsDailog(mbaStudent![i]),
                         ),
                       ),
                     );
@@ -134,6 +137,146 @@ class _MbaFirmState extends State<MbaFirm> {
     mbaStudent = mbaCollection.docs;
     _isLoading = false;
     refresh();
+  }
+
+  Future<void> _showDetailsDailog(QueryDocumentSnapshot<Map<String, dynamic>> student) async {
+    showDialog(
+      context: context,
+      builder: (context) => SizedBox(
+        height: 200,
+        child: AlertDialog(
+          elevation: 4,
+          title: const Center(child: Text("Student Details")),
+          contentPadding: const EdgeInsets.all(10),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+          content: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Table(
+                  border: const TableBorder(),
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: IntrinsicColumnWidth(),
+                    1: IntrinsicColumnWidth(),
+                    2: IntrinsicColumnWidth(),
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    TableRow(
+                      children: [
+                        const Text('First Name'),
+                        const Text(':'),
+                        Text(student.data()['firstname']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Last Name'),
+                        const Text(':'),
+                        Text(student.data()['lastname']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Address'),
+                        const Text(':'),
+                        Text(student.data()['address']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Email'),
+                        const Text(':'),
+                        Text(student.data()['email']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Phone Number'),
+                        const Text(':'),
+                        Text(student.data()['phno']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('CGPA'),
+                        const Text(':'),
+                        Text(student.data()['CGPA']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('HSC Mark'),
+                        const Text(':'),
+                        Text(student.data()['HSC']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('SSLC Mark'),
+                        const Text(':'),
+                        Text(student.data()['SSLC']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Year Of Passing'),
+                        const Text(':'),
+                        Text(student.data()['yop3']),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        const Text('Area of Interest'),
+                        const Text(':'),
+                        Text(student.data()['AOI']),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actionsPadding: const EdgeInsets.all(10),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+                final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
+                await FirebaseFirestore.instance.collection('Placement').add(
+                    {
+                      'firmId':currentUserId,
+                      'studentId':student.data()['uid'],
+                      'msg':"Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
+                      'firmAddress':currentUser.docs[0].data()['address'],
+                      'firmPhno':currentUser.docs[0].data()['phno'],
+                      'firmEmail':currentUser.docs[0].data()['email']
+                    }
+                ).then((value) => {
+                  debugPrint("Data Saved.And student is informed"),
+                  ToastManager.showToastShort(msg: "Student is intimated."),
+                  Navigator.pop(context)
+                });
+              },
+              child: const Text(
+                "Call For Interview",
+              ),
+            ),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Cancel",
+                ))
+          ],
+        ),
+      ),
+    );
   }
 
   void refresh() {

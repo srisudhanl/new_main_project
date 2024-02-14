@@ -66,13 +66,14 @@ class _NewFirmState extends State<NewFirm> {
                     leading: CircleAvatar(
                       backgroundColor: Colors.redAccent,
                       child: Text(
-                        (newFirm?[i].data()['Company'] ?? "i").toString().substring(0, 1),
+                        (newFirm?[i].data()['companyname'] ?? "i").toString().substring(0, 1),
                         style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                     ),
-                    title: Text(newFirm?[i].data()['Company']),
+                    title: Text(newFirm?[i].data()['companyname'
+                        '']),
                     isThreeLine: true,
                     subtitle: Column(
                       mainAxisSize: MainAxisSize.min,
