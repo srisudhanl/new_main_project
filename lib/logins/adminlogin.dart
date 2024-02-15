@@ -78,7 +78,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: buildTextField(
-                      labelText: 'Enter Email:',
+                      labelText: 'Enter Email',
                       hintText: 'email address',
                       textEditingController: emailController,
                       textInputType: TextInputType.emailAddress,
@@ -94,7 +94,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     child: buildTextField(
                       textInputType: TextInputType.text,
                       textEditingController: passwordController,
-                      labelText: 'Enter PassWord:',
+                      labelText: 'Enter PassWord',
                       hintText: 'Password',
                     ),
                   ),
