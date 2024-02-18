@@ -147,21 +147,6 @@ class _FirmInterviewOverViewScreenState extends State<FirmInterviewOverViewScree
     print("delete complete");
   }
 
-  Future<String> getStudentName(String uid) async {
-    final student = await getStudent(uid);
-    return student.data()['firstname'];
-  }
-
-  Future<String> getPhone(String uid) async {
-    final student = await getStudent(uid);
-    return student.data()['phno'];
-  }
-
-  Future<String> getemail(String uid) async {
-    final student = await getStudent(uid);
-    return student.data()['email'];
-  }
-
   void refresh() {
     if (this.mounted) setState(() {});
   }

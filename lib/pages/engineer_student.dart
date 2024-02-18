@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../querypage.dart';
+import '../student_interview_over_view_screen.dart';
 
 class EngineerStudent extends StatefulWidget {
   const EngineerStudent({Key? key}) : super(key: key);
@@ -29,6 +30,12 @@ class _EngineerStudentState extends State<EngineerStudent> {
           ),
         ),
         actions: <Widget>[
+          IconButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const StudentInterViewOverViewScreen()),
+              ),
+              icon: const Icon(Icons.info_outline_rounded)),
           IconButton(
             icon: Icon(Icons.query_builder),
             onPressed: () {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project1/toast_manager.dart';
 
 class FirmCollect extends StatefulWidget {
   const FirmCollect({Key? key}) : super(key: key);
@@ -173,6 +174,7 @@ class _FirmCollectState extends State<FirmCollect> {
                                 {FirebaseAuth.instance.signOut().then((result) =>
                                 {
                                   Navigator.pop(context),
+                                  ToastManager.showToastShort(msg: "Your submission under verification process. Kindly ,try to login after 3 days."),
                                   _showDialog(context, "Saved Successfully"),
                                 }).catchError(
                                         (err) => print(err)),}).catchError((err) =>

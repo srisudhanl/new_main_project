@@ -136,7 +136,7 @@ class _UserLoginState extends State<UserLogin> {
                             if (userSnapShot.docs.isNotEmpty) {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
                             } else {
-                              return ToastManager.showToastShort(msg: "You're not authorized!!!");
+                              return ToastManager.showToastShort(msg: "You're request is under verification process.Try again,later!!!");
                             }
                           } catch (e) {
                             if (kDebugMode) {
