@@ -230,6 +230,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_mailer:
+    dependency: "direct main"
+    description:
+      name: flutter_mailer
+      sha256: "4fffaa35e911ff5ec2e5a4ebbca62c372e99a154eb3bb2c0bf79f09adf6ecf4c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
+  flutter_sms:
+    dependency: "direct main"
+    description:
+      name: flutter_sms
+      sha256: "2fe5f584f02596343557eeca56348f9b82413fefe83a423fab880cdbdf54d8d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

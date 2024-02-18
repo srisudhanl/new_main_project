@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:main_project1/toast_manager.dart';
 
 import '../querypage.dart';
@@ -248,21 +249,21 @@ class _ArtsFirmState extends State<ArtsFirm> {
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
                 final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
                 final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
-                await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
-                    {
-                      'firmId':currentUserId,
-                      'uid':docId,
-                      'studentId':student.data()['uid'],
-                      'msg':"Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
-                      'firmAddress':currentUser.docs[0].data()['address'],
-                      'firmPhno':currentUser.docs[0].data()['phno'],
-                      'firmEmail':currentUser.docs[0].data()['email']
-                    }
-                ).then((value) => {
-                  debugPrint("Data Saved.And student is informed"),
-                  ToastManager.showToastShort(msg: "Student is intimated."),
-                  Navigator.pop(context)
-                });
+                await _sendEmail(currentUser.docs[0], student);
+                await FirebaseFirestore.instance.collection('Placement').doc(docId).set({
+                  'firmId': currentUserId,
+                  'uid': docId,
+                  'studentId': student.data()['uid'],
+                  'msg':
+                      "Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
+                  'firmAddress': currentUser.docs[0].data()['address'],
+                  'firmPhno': currentUser.docs[0].data()['phno'],
+                  'firmEmail': currentUser.docs[0].data()['email']
+                }).then((value) => {
+                      debugPrint("Data Saved.And student is informed"),
+                      ToastManager.showToastShort(msg: "Student is intimated."),
+                      Navigator.pop(context)
+                    });
               },
               child: const Text(
                 "Call For Interview",
@@ -277,6 +278,17 @@ class _ArtsFirmState extends State<ArtsFirm> {
         ),
       ),
     );
+  }
+
+  Future<void> _sendEmail(
+      QueryDocumentSnapshot<Map<String, dynamic>> currentUser, QueryDocumentSnapshot<Map<String, dynamic>> student) async {
+    MailOptions mailOptions = MailOptions(
+        recipients: [student.data()['email']],
+        isHTML: true,
+        subject: "Regarding offer a job",
+        body:
+            "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by replying to this email or contacting us.</p><p>We look forward to meeting with you.</p>");
+    await FlutterMailer.send(mailOptions);
   }
 
   void refresh() {

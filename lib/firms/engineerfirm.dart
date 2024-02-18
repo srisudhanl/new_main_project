@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 
 import '../querypage.dart';
 import '../toast_manager.dart';
@@ -248,6 +249,7 @@ class _EngineerFirmState extends State<EngineerFirm> {
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
                 final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
                 final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
+                await _sendEmail(currentUser.docs[0], student);
                 await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
                     {
                       'firmId':currentUserId,
@@ -277,6 +279,17 @@ class _EngineerFirmState extends State<EngineerFirm> {
         ),
       ),
     );
+  }
+
+  Future<void> _sendEmail(
+      QueryDocumentSnapshot<Map<String, dynamic>> currentUser, QueryDocumentSnapshot<Map<String, dynamic>> student) async {
+    MailOptions mailOptions = MailOptions(
+        recipients: [student.data()['email']],
+        isHTML: true,
+        subject: "Regarding offer a job",
+        body:
+        "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by replying to this email or contacting us.</p><p>We look forward to meeting with you.</p>");
+    await FlutterMailer.send(mailOptions);
   }
 
   void refresh() {
