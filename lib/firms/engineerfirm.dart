@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 
 import '../querypage.dart';
 import '../toast_manager.dart';
@@ -15,6 +17,7 @@ class EngineerFirm extends StatefulWidget {
 
 class _EngineerFirmState extends State<EngineerFirm> {
   bool _isLoading = false;
+  bool _isSending = false;
   List<QueryDocumentSnapshot<Map<String, dynamic>>>? engineer;
 
   @override
@@ -246,10 +249,12 @@ class _EngineerFirmState extends State<EngineerFirm> {
           actions: [
             TextButton(
               onPressed: () async {
+                _isSending = true;
+                refresh();
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
                 final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
                 final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
-                await _sendEmail(currentUser.docs[0], student);
+                await _sendEmail1(currentUser.docs[0], student);
                 await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
                     {
                       'firmId':currentUserId,
@@ -265,8 +270,10 @@ class _EngineerFirmState extends State<EngineerFirm> {
                   ToastManager.showToastShort(msg: "Student is intimated."),
                   Navigator.pop(context)
                 });
+                _isSending = false;
+                refresh();
               },
-              child: const Text(
+              child:_isSending? const CircularProgressIndicator():const Text(
                 "Call For Interview",
               ),
             ),
@@ -290,6 +297,27 @@ class _EngineerFirmState extends State<EngineerFirm> {
         body:
         "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by replying to this email or contacting us.</p><p>We look forward to meeting with you.</p>");
     await FlutterMailer.send(mailOptions);
+  }
+
+  Future<void> _sendEmail1(
+      QueryDocumentSnapshot<Map<String, dynamic>> currentUser, QueryDocumentSnapshot<Map<String, dynamic>> student) async {
+    final smtpServer = gmail('teamopsv@gmail.com', 'llhk fjit dtiw mktl');
+    final message = Message()
+      ..from = Address("teamopsv@gmail.com", "OPSV")
+      ..recipients.add(student.data()['email'])
+      ..subject = "Regarding offer a job"
+      ..html =
+          "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by contacting us.</p><p>We look forward to meeting with you.</p>";
+    try {
+      final sendMail = await send(message, smtpServer);
+      print('Message sent:  ' + sendMail.toString());
+    } on MailerException catch (e) {
+      print('Message not sent');
+      print(e.toString());
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
   }
 
   void refresh() {
