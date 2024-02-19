@@ -53,7 +53,7 @@ class _UserDivisionState extends State<UserDivision> {
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                         shadowColor: Colors.blueGrey),
                     child: Text(
-                      "Login for Arts student",
+                      "Arts student",
                       style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                       textAlign: TextAlign.center,
                     )),
@@ -70,7 +70,7 @@ class _UserDivisionState extends State<UserDivision> {
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                         shadowColor: Colors.blueGrey),
                     child: Text(
-                      "Login for engineering student",
+                      "Engineering student",
                       style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                       textAlign: TextAlign.center,
                     )),
@@ -87,7 +87,7 @@ class _UserDivisionState extends State<UserDivision> {
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                         shadowColor: Colors.blueGrey),
                     child: Text(
-                      "Login for MBA student",
+                      "MBA student",
                       style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.purple.shade900),
                       textAlign: TextAlign.center,
                     )),
