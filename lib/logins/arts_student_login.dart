@@ -70,7 +70,7 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
             Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage("assets/arts_student.jpg"), fit: BoxFit.contain)),
+                  image: DecorationImage(image: AssetImage("assets/student_login.gif"), fit: BoxFit.contain)),
               height: 200,
               width: double.infinity,
             ),

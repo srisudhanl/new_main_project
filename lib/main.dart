@@ -2,9 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:main_project1/forget_password_screen.dart';
-import 'package:main_project1/logins/MBAlogin.dart';
-import 'package:main_project1/logins/arts_student_login.dart';
+import 'package:main_project1/new_ui/login_modules/new_login.dart';
 import 'package:main_project1/querypage.dart';
 
 import 'logindivision.dart';
@@ -17,8 +15,16 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: true,
-    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent), fontFamily: 'Serif'),
-    home: isTesting ? LoginDivision() : Splash(),
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.purpleAccent),
+      fontFamily: 'Serif',
+      useMaterial3: true,
+      appBarTheme: AppBarTheme(
+        color: Colors.purple.shade100,
+      ),
+      bottomSheetTheme: BottomSheetThemeData(surfaceTintColor: Colors.purple.shade100),
+    ),
+    home: isTesting ? NewLoginPage() : Splash(),
   ));
 }
 
@@ -130,93 +136,52 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+      body: Stack(
+        children: [
           Container(
-            color: Colors.transparent,
+            height: 700,
             width: double.infinity,
-            height: 135,
-            child: Center(
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Welcome',
-                    textStyle: const TextStyle(
-                      fontSize: 50.0,
-                      fontFamily: 'Horizon',
-                    ),
-                    colors: [
-                      Colors.purple,
-                      Colors.blue,
-                      Colors.yellow,
-                      Colors.red,
-                    ],
-                  )
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
-              ),
-            ),
+            decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.fill)),
           ),
-          Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            height: 135,
-            child: Center(
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'To',
-                    textStyle: const TextStyle(
-                      fontSize: 50.0,
-                      fontFamily: 'Horizon',
-                    ),
-                    colors: [
-                      Colors.purple,
-                      Colors.blue,
-                      Colors.yellow,
-                      Colors.red,
-                    ],
-                  )
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
+          Column(
+            children: [
+              const SizedBox(
+                height: 130,
               ),
-            ),
-          ),
-          Container(
-            color: Colors.transparent,
-            width: double.infinity,
-            height: 135,
-            child: Center(
-              child: AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'OPSV',
-                    textStyle: const TextStyle(
-                      fontSize: 50.0,
-                      fontFamily: 'Horizon',
-                    ),
-                    colors: [
-                      Colors.purple,
-                      Colors.blue,
-                      Colors.yellow,
-                      Colors.red,
-                    ],
-                  )
-                ],
-                isRepeatingAnimation: true,
-                repeatForever: true,
+              Center(
+                child: Image.asset("assets/home_background.png"),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 100,
+              Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                height: 135,
+                margin: EdgeInsets.only(left: 20, right: 20),
+                child: Center(
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      ColorizeAnimatedText(
+                        'Start Your Carrer With Us',
+                        textAlign: TextAlign.center,
+                        textStyle: const TextStyle(
+                          fontSize: 50.0,
+                          // fontFamily: 'Serin',
+                        ),
+                        colors: [
+                          Colors.purple,
+                          Colors.blue,
+                          Colors.yellow,
+                          Colors.red,
+                        ],
+                      )
+                    ],
+                    isRepeatingAnimation: true,
+                    repeatForever: true,
+                  ),
+                ),
+              ),
+            ],
           )
-        ]),
+        ],
       ),
     );
   }

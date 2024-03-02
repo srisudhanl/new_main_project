@@ -42,7 +42,7 @@ class _UserLoginState extends State<UserLogin> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'OPSV-USERLOGIN',
+            'OPSV-FirmLogin',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
@@ -57,21 +57,17 @@ class _UserLoginState extends State<UserLogin> {
             ),
           ], //TextStyle
         ),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: SingleChildScrollView(
-              child: Column(children: <Widget>[
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
             Container(
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage("assets/user_login.jpeg"), fit: BoxFit.contain)),
+              margin: EdgeInsets.all(20),
+              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/group.png"), fit: BoxFit.contain)),
               height: 200,
               width: double.infinity,
             ),
             SizedBox(height: 15),
             Container(
-              height: 600,
+              height: 550,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                   image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover),
@@ -136,7 +132,8 @@ class _UserLoginState extends State<UserLogin> {
                             if (userSnapShot.docs.isNotEmpty) {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const UserDivision()));
                             } else {
-                              return ToastManager.showToastShort(msg: "You're request is under verification process.Try again,later!!!");
+                              return ToastManager.showToastShort(
+                                  msg: "You're request is under verification process.Try again,later!!!");
                             }
                           } catch (e) {
                             if (kDebugMode) {
@@ -207,7 +204,7 @@ class _UserLoginState extends State<UserLogin> {
                 ],
               ),
             ),
-          ])),
+          ]),
         ));
   }
 }

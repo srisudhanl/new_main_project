@@ -55,10 +55,11 @@ class _MbaLoginState extends State<MbaLogin> {
           child: SingleChildScrollView(
               child: Column(children: <Widget>[
             Container(
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/mba_login.jpeg"), fit: BoxFit.cover)),
+              // decoration: const BoxDecoration(
+              //     shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/mba_login.png"), fit: BoxFit.cover)),
               height: 300,
               width: double.infinity,
+              child: Image.asset("assets/mba_login1.png"),
             ),
             SizedBox(height: 15),
             Container(

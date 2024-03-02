@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:main_project1/custom_widgets/custom_text_field.dart';
 
 class QueryPage extends StatefulWidget {
   const QueryPage({Key? key}) : super(key: key);
@@ -64,18 +65,26 @@ class _QueryPageState extends State<QueryPage> {
             ), //Text
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: txtquery,
-                decoration: const InputDecoration(
-                  labelText: 'Enter Query:',
-                  hintText: 'Queries',
-                ),
-                //InputDecoration
-                autocorrect: true,
-                onChanged: (value) {
-                  query = value;
-                },
-                keyboardType: TextInputType.text,
+              //   child: TextField(
+              //     controller: txtquery,
+              //     decoration: const InputDecoration(
+              //       labelText: 'Enter Query:',
+              //       hintText: 'Queries',
+              //     ),
+              //     //InputDecoration
+              //     autocorrect: true,
+              //     onChanged: (value) {
+              //       query = value;
+              //     },
+              //     keyboardType: TextInputType.text,
+              //   ),
+              // ),
+              child: buildTextField(
+                labelText: "Enter Query",
+                hintText: "Queries",
+                textInputType: TextInputType.text,
+                textEditingController: txtquery,
+                onChanged: (value) => query = value,
               ),
             ),
             Container(
@@ -90,18 +99,19 @@ class _QueryPageState extends State<QueryPage> {
                   children: <Widget>[
                     ElevatedButton(
                       onPressed: () async {
-                        await FirebaseFirestore.instance.collection("Queries").add({'query': query,'timeStamp':DateTime.now()});
+                        await FirebaseFirestore.instance.collection("Queries").add({'query': query, 'timeStamp': DateTime.now()});
                         Navigator.pop(context);
                         _showDialog(context, "Your Query is being processed.");
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          // surfaceTintColor: Colors.green,
+                          backgroundColor: Colors.green.shade900,
                           textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                          shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2),
-                            ),
-                          ),
+                          // shape: const BeveledRectangleBorder(
+                          //   borderRadius: BorderRadius.all(
+                          //     Radius.circular(2),
+                          //   ),
+                          // ),
                           shadowColor: Colors.blueGrey),
                       child: const Text(
                         "Register/submit",
@@ -115,13 +125,14 @@ class _QueryPageState extends State<QueryPage> {
                     txtquery.clear();
                   },
                   style: ElevatedButton.styleFrom(
+                      // surfaceTintColor: Colors.red,
                       backgroundColor: Colors.red,
                       textStyle: const TextStyle(color: Colors.white, fontSize: 15.0),
-                      shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(2),
-                        ),
-                      ),
+                      // shape: const BeveledRectangleBorder(
+                      //   borderRadius: BorderRadius.all(
+                      //     Radius.circular(2),
+                      //   ),
+                      // ),
                       shadowColor: Colors.blueGrey),
                   child: const Text(
                     "Clear",
