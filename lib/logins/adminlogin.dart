@@ -54,10 +54,12 @@ class _AdminLoginState extends State<AdminLogin> {
               child: Column(children: <Widget>[
             Container(
               height: 300,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage("assets/admin_login.jpeg"), fit: BoxFit.cover)),
-              width: double.infinity,
+              width: 250,
+              // decoration: const BoxDecoration(
+              //   image: DecorationImage(image: AssetImage("assets/administrator.png"), fit: BoxFit.cover),
+              // ),
+              child: Image.asset("assets/administrator.png"),
+              // width: double.infinity,
             ),
             Container(
               height: 600,

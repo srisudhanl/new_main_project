@@ -3,22 +3,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server/gmail.dart';
+import 'package:mailer/smtp_server.dart';
+import 'package:main_project1/toast_manager.dart';
 
-import '../querypage.dart';
-import '../toast_manager.dart';
+import '../query_page.dart';
 
-class EngineerFirm extends StatefulWidget {
-  const EngineerFirm({Key? key}) : super(key: key);
+class ArtsFirm extends StatefulWidget {
+  const ArtsFirm({Key? key}) : super(key: key);
 
   @override
-  State<EngineerFirm> createState() => _EngineerFirmState();
+  State<ArtsFirm> createState() => _ArtsFirmState();
 }
 
-class _EngineerFirmState extends State<EngineerFirm> {
+class _ArtsFirmState extends State<ArtsFirm> {
   bool _isLoading = false;
   bool _isSending = false;
-  List<QueryDocumentSnapshot<Map<String, dynamic>>>? engineer;
+  List<QueryDocumentSnapshot<Map<String, dynamic>>>? artsStudent;
 
   @override
   void initState() {
@@ -57,7 +57,8 @@ class _EngineerFirmState extends State<EngineerFirm> {
             Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+              decoration:
+                  const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
             ),
             _isLoading
                 ? const Center(
@@ -73,44 +74,44 @@ class _EngineerFirmState extends State<EngineerFirm> {
                     ),
                   )
                 : ListView.builder(
-                    itemCount: engineer?.length,
+                    itemCount: artsStudent?.length,
                     itemBuilder: (context, i) {
                       return Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Material(
+                          elevation: 4,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(30),
                             ),
                           ),
-                          elevation: 4,
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundColor: Colors.redAccent,
                               child: Text(
-                                (engineer?[i].data()['firstname'] ?? "i").toString().substring(0, 1),
+                                (artsStudent?[i].data()['firstname'] ?? "i").toString().substring(0, 1),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
                             ),
-                            title: Text(engineer?[i].data()['firstname']),
+                            title: Text(artsStudent?[i].data()['firstname']),
                             isThreeLine: true,
                             subtitle: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'SSLC: ${engineer?[i].data()['SSLC']}',
-                                  style: TextStyle(fontSize: 11),
+                                  'SSLC: ${artsStudent?[i].data()['SSLC']}',
+                                  style: const TextStyle(fontSize: 11),
                                 ),
                                 Text(
-                                  'HSC: ${engineer?[i].data()['HSC']}',
-                                  style: TextStyle(fontSize: 11),
+                                  'HSC: ${artsStudent?[i].data()['HSC']}',
+                                  style: const TextStyle(fontSize: 11),
                                 ),
                                 Text(
-                                  'CGPA: ${engineer?[i].data()['CGPA']}',
-                                  style: TextStyle(fontSize: 11),
+                                  'CGPA: ${artsStudent?[i].data()['CGPA']}',
+                                  style: const TextStyle(fontSize: 11),
                                 ),
                               ],
                             ),
@@ -122,7 +123,7 @@ class _EngineerFirmState extends State<EngineerFirm> {
                             ),
                             horizontalTitleGap: 20,
                             tileColor: Colors.white,
-                            onTap: () => _showDetailsDailog(engineer![i]),
+                            onTap: () => _showDetailsDailog(artsStudent![i]),
                           ),
                         ),
                       );
@@ -135,8 +136,8 @@ class _EngineerFirmState extends State<EngineerFirm> {
   Future<void> _oninit() async {
     _isLoading = true;
     refresh();
-    final engineerCollection = await FirebaseFirestore.instance.collection('engineer').get();
-    engineer = engineerCollection.docs;
+    final artsStudentCollection = await FirebaseFirestore.instance.collection('ArtsStudent').get();
+    artsStudent = artsStudentCollection.docs;
     _isLoading = false;
     refresh();
   }
@@ -252,30 +253,32 @@ class _EngineerFirmState extends State<EngineerFirm> {
                 _isSending = true;
                 refresh();
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
-                final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
+                final currentUser =
+                    await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
                 final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
                 await _sendEmail1(currentUser.docs[0], student);
-                await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
-                    {
-                      'firmId':currentUserId,
-                      'studentId':student.data()['uid'],
-                      'uid':docId,
-                      'msg':"Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
-                      'firmAddress':currentUser.docs[0].data()['address'],
-                      'firmPhno':currentUser.docs[0].data()['phno'],
-                      'firmEmail':currentUser.docs[0].data()['email']
-                    }
-                ).then((value) => {
-                  debugPrint("Data Saved.And student is informed"),
-                  ToastManager.showToastShort(msg: "Student is intimated."),
-                  Navigator.pop(context)
-                });
+                await FirebaseFirestore.instance.collection('Placement').doc(docId).set({
+                  'firmId': currentUserId,
+                  'uid': docId,
+                  'studentId': student.data()['uid'],
+                  'msg':
+                      "Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
+                  'firmAddress': currentUser.docs[0].data()['address'],
+                  'firmPhno': currentUser.docs[0].data()['phno'],
+                  'firmEmail': currentUser.docs[0].data()['email']
+                }).then((value) => {
+                      debugPrint("Data Saved.And student is informed"),
+                      ToastManager.showToastShort(msg: "Student is intimated."),
+                      Navigator.pop(context)
+                    });
                 _isSending = false;
                 refresh();
               },
-              child:_isSending? const CircularProgressIndicator():const Text(
-                "Call For Interview",
-              ),
+              child: _isSending
+                  ? const CircularProgressIndicator()
+                  : const Text(
+                      "Call For Interview",
+                    ),
             ),
             TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -295,7 +298,7 @@ class _EngineerFirmState extends State<EngineerFirm> {
         isHTML: true,
         subject: "Regarding offer a job",
         body:
-        "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by replying to this email or contacting us.</p><p>We look forward to meeting with you.</p>");
+            "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by replying to this email or contacting us.</p><p>We look forward to meeting with you.</p>");
     await FlutterMailer.send(mailOptions);
   }
 
@@ -303,7 +306,7 @@ class _EngineerFirmState extends State<EngineerFirm> {
       QueryDocumentSnapshot<Map<String, dynamic>> currentUser, QueryDocumentSnapshot<Map<String, dynamic>> student) async {
     final smtpServer = gmail('teamopsv@gmail.com', 'llhk fjit dtiw mktl');
     final message = Message()
-      ..from = Address("teamopsv@gmail.com", "OPSV")
+      ..from = const Address("teamopsv@gmail.com", "OPSV")
       ..recipients.add(student.data()['email'])
       ..subject = "Regarding offer a job"
       ..html =

@@ -5,7 +5,7 @@ import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 
-import '../querypage.dart';
+import '../query_page.dart';
 import '../toast_manager.dart';
 
 class MbaFirm extends StatefulWidget {
@@ -52,7 +52,8 @@ class _MbaFirmState extends State<MbaFirm> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+            decoration:
+                const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
           ),
           _isLoading
               ? const Center(
@@ -254,30 +255,32 @@ class _MbaFirmState extends State<MbaFirm> {
                 _isSending = true;
                 refresh();
                 final currentUserId = FirebaseAuth.instance.currentUser?.uid;
-                final currentUser = await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
+                final currentUser =
+                    await FirebaseFirestore.instance.collection('Firms').where('uid', isEqualTo: currentUserId).get();
                 final docId = FirebaseFirestore.instance.collection('Placement').doc().id;
                 await _sendEmail1(currentUser.docs[0], student);
-                await FirebaseFirestore.instance.collection('Placement').doc(docId).set(
-                    {
-                      'firmId':currentUserId,
-                      'studentId':student.data()['uid'],
-                      'uid':docId,
-                      'msg':"Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
-                      'firmAddress':currentUser.docs[0].data()['address'],
-                      'firmPhno':currentUser.docs[0].data()['phno'],
-                      'firmEmail':currentUser.docs[0].data()['email']
-                    }
-                ).then((value) => {
-                  debugPrint("Data Saved.And student is informed"),
-                  ToastManager.showToastShort(msg: "Student is intimated."),
-                  Navigator.pop(context)
-                });
+                await FirebaseFirestore.instance.collection('Placement').doc(docId).set({
+                  'firmId': currentUserId,
+                  'studentId': student.data()['uid'],
+                  'uid': docId,
+                  'msg':
+                      "Hi,${student.data()['firstname']}. You are Selected for an Interview in ${currentUser.docs[0].data()['Company']}.If you are interested, contact us.",
+                  'firmAddress': currentUser.docs[0].data()['address'],
+                  'firmPhno': currentUser.docs[0].data()['phno'],
+                  'firmEmail': currentUser.docs[0].data()['email']
+                }).then((value) => {
+                      debugPrint("Data Saved.And student is informed"),
+                      ToastManager.showToastShort(msg: "Student is intimated."),
+                      Navigator.pop(context)
+                    });
                 _isSending = true;
                 refresh();
               },
-              child: _isSending? const CircularProgressIndicator():const Text(
-                "Call For Interview",
-              ),
+              child: _isSending
+                  ? const CircularProgressIndicator()
+                  : const Text(
+                      "Call For Interview",
+                    ),
             ),
             TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -297,7 +300,7 @@ class _MbaFirmState extends State<MbaFirm> {
         isHTML: true,
         subject: "Regarding offer a job",
         body:
-        "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by contacting us.</p><p>We look forward to meeting with you.</p>");
+            "<h1>Congratulations! You've Been Selected for an Interview</h1><p>Hello <span>${student.data()['firstname']}</span>,</p><p>We are pleased to inform you that you have been selected for an interview at <span>${currentUser.data()['Company']}</span>.</p><p>For more details ,Contact us:</p><ul><li>email: <span>${currentUser.data()['email']}</span></li><li>Ph.no : <span>${currentUser.data()['phno']}</span></li></ul><p>Please confirm your attendance by contacting us.</p><p>We look forward to meeting with you.</p>");
     await FlutterMailer.send(mailOptions);
   }
 

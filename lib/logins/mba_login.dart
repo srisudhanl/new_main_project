@@ -7,8 +7,8 @@ import 'package:main_project1/custom_widgets/custom_text_field.dart';
 
 import '../forget_password_screen.dart';
 import '../pages/mba_student.dart';
-import '../querypage.dart';
-import '../registers/MBAregister.dart';
+import '../query_page.dart';
+import '../registers/mba_register.dart';
 import '../toast_manager.dart';
 
 class MbaLogin extends StatefulWidget {
@@ -55,10 +55,11 @@ class _MbaLoginState extends State<MbaLogin> {
           child: SingleChildScrollView(
               child: Column(children: <Widget>[
             Container(
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/mba_login.jpeg"), fit: BoxFit.cover)),
+              // decoration: const BoxDecoration(
+              //     shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/mba_login.png"), fit: BoxFit.cover)),
               height: 300,
               width: double.infinity,
+              child: Image.asset("assets/mba_login1.png"),
             ),
             SizedBox(height: 15),
             Container(
