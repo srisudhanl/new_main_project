@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../custom_widgets/custom_text_field.dart';
 import '../forget_password_screen.dart';
-import '../querypage.dart';
-import '../registers/firmcollect.dart';
+import '../query_page.dart';
+import '../registers/firm_collect.dart';
 import '../toast_manager.dart';
-import '../userdivision.dart';
+import '../user_division.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({Key? key}) : super(key: key);

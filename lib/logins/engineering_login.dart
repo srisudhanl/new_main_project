@@ -6,8 +6,8 @@ import 'package:main_project1/forget_password_screen.dart';
 
 import '../custom_widgets/custom_text_field.dart';
 import '../pages/engineer_student.dart';
-import '../querypage.dart';
-import '../registers/engineeringregister.dart';
+import '../query_page.dart';
+import '../registers/engineering_register.dart';
 import '../toast_manager.dart';
 
 class EngineeringLogin extends StatefulWidget {

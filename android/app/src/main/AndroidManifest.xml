@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
    <application
-        android:label="main_project1"
+        android:label="OPSV"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

@@ -6,8 +6,8 @@ import 'package:main_project1/custom_widgets/custom_text_field.dart';
 
 import '../forget_password_screen.dart';
 import '../pages/arts_student.dart';
-import '../querypage.dart';
-import '../registers/register.dart';
+import '../query_page.dart';
+import '../registers/arts_register.dart';
 import '../toast_manager.dart';
 
 class ArtsStudentLogin extends StatefulWidget {

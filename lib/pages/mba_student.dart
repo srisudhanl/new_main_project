@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../querypage.dart';
+import '../query_page.dart';
 import '../student_interview_over_view_screen.dart';
 
 class MBA extends StatefulWidget {
@@ -32,9 +32,9 @@ class _MBAState extends State<MBA> {
         actions: <Widget>[
           IconButton(
               onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const StudentInterViewOverViewScreen()),
-              ),
+                    context,
+                    MaterialPageRoute(builder: (context) => const StudentInterViewOverViewScreen()),
+                  ),
               icon: const Icon(Icons.info_outline_rounded)),
           IconButton(
             icon: Icon(Icons.query_builder),
@@ -53,10 +53,8 @@ class _MBAState extends State<MBA> {
             }
             return SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/background.jpeg"),
-                        fit: BoxFit.cover)),
+                decoration:
+                    const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
                 child: Column(
                   children: <Widget>[
                     ListTile(

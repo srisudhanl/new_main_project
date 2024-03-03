@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_project1/student_interview_over_view_screen.dart';
 
-import '../querypage.dart';
+import '../query_page.dart';
 
 class ArtsStudent extends StatefulWidget {
   const ArtsStudent({Key? key}) : super(key: key);
@@ -53,7 +53,8 @@ class _ArtsStudentState extends State<ArtsStudent> {
             }
             return SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
+                decoration:
+                    const BoxDecoration(image: DecorationImage(image: AssetImage("assets/background.jpeg"), fit: BoxFit.cover)),
                 child: Column(
                   children: <Widget>[
                     ListTile(

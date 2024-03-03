@@ -3,11 +3,11 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:main_project1/new_ui/login_modules/new_login.dart';
-import 'package:main_project1/querypage.dart';
+import 'package:main_project1/query_page.dart';
 
-import 'logindivision.dart';
+import 'login_division.dart';
 import 'logins/adminlogin.dart';
-import 'logins/userlogin.dart';
+import 'logins/user_login.dart';
 
 Future<void> main() async {
   bool isTesting = false;

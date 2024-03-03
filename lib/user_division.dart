@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:main_project1/firm_interview_over_view_screen.dart';
-import 'firms/MBAfirm.dart';
-import 'firms/engineerfirm.dart';
-import 'firms/firm.dart';
+import 'firms/mba_firm.dart';
+import 'firms/engineer_firm.dart';
+import 'firms/arts_firm.dart';
 
 class UserDivision extends StatefulWidget {
   const UserDivision({Key? key}) : super(key: key);
