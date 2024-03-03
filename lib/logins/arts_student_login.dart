@@ -47,7 +47,7 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'OPSV - Student Login',
+            'OPSV - Arts Login',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
@@ -70,8 +70,8 @@ class _ArtsStudentLoginState extends State<ArtsStudentLogin> {
             Container(
               decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage("assets/student_login.gif"), fit: BoxFit.contain)),
-              height: 200,
+                  image: DecorationImage(image: AssetImage("assets/arts_student.png"), fit: BoxFit.contain)),
+              height: 300,
               width: double.infinity,
             ),
             SizedBox(height: 15),

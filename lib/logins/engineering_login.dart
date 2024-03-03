@@ -69,8 +69,8 @@ class _EngineeringLoginState extends State<EngineeringLogin> {
             child: Column(children: <Widget>[
           Container(
             decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(image: AssetImage("assets/arts_student.jpg"), fit: BoxFit.contain)),
+                // shape: BoxShape.circle,
+                image: DecorationImage(image: AssetImage("assets/engineer_login.png"), fit: BoxFit.contain)),
             height: 200,
             width: double.infinity,
           ),
